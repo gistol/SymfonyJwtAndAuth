@@ -35,5 +35,30 @@ services:
         arguments: [~, App\Entity\Device, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Device }
+
+    App\Admin\NotificationsAdmin:
+        arguments: [~, App\Entity\Notifications, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Notifications }
+
+    App\Admin\CitiesAdmin:
+        arguments: [~, App\Entity\Cities, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Cities }
+
+    App\Admin\CoursesAdmin:
+        arguments: [~, App\Entity\Courses, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Courses }
+
+    App\Admin\UserAdminAdmin:
+        arguments: [~, App\Entity\UserAdmin, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserAdmin }
+
+    App\Admin\NewsAdmin:
+        arguments: [~, App\Entity\News, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: News }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
