@@ -56,7 +56,6 @@ security:
                 provider: chain_provider
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
-
         main:
             pattern: .*
             context: user
