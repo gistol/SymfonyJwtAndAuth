@@ -81,7 +81,7 @@ class News
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -99,7 +99,7 @@ class News
     /**
      * @return string
      */
-    public function getBody(): string
+    public function getBody(): ?string
     {
         return $this->body;
     }
@@ -153,7 +153,7 @@ class News
     /**
      * @return string
      */
-    public function getSubtitle(): string
+    public function getSubtitle(): ?string
     {
         return $this->subtitle;
     }
@@ -189,7 +189,7 @@ class News
     /**
      * @return string
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
@@ -207,7 +207,7 @@ class News
     /**
      * @return string
      */
-    public function getPushText(): string
+    public function getPushText(): ?string
     {
         return $this->pushText;
     }
@@ -243,7 +243,7 @@ class News
     /**
      * @return string
      */
-    public function getLinkText(): string
+    public function getLinkText(): ?string
     {
         return $this->linkText;
     }

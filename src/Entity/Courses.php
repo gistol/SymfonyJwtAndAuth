@@ -74,7 +74,7 @@ class Courses
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -92,7 +92,7 @@ class Courses
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -146,7 +146,7 @@ class Courses
     /**
      * @return string
      */
-    public function getMode(): string
+    public function getMode(): ?string
     {
         return $this->mode;
     }
@@ -164,7 +164,7 @@ class Courses
     /**
      * @return string
      */
-    public function getImageFileName(): string
+    public function getImageFileName(): ?string
     {
         return $this->imageFileName;
     }
@@ -182,7 +182,7 @@ class Courses
     /**
      * @return string
      */
-    public function getImageContentType(): string
+    public function getImageContentType(): ?string
     {
         return $this->imageContentType;
     }
