@@ -39,9 +39,20 @@ class User implements UserInterface
      */
     private $devices;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Notifications", mappedBy="userId")
+     */
+    private $notifications;
+
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
     public function __construct()
     {
         $this->devices = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getDevices()
