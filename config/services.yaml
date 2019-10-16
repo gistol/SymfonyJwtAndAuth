@@ -11,6 +11,9 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    Cocur\Slugify\Slugify:
+        autowire: true
+
     mailer:
         alias: fos_user.mailer.noop
         public: true
@@ -62,3 +65,5 @@ services:
             - { name: sonata.admin, manager_type: orm, label: News }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    sensio_framework_extra.view.listener:
+        alias: Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener

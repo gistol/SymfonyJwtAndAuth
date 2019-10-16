@@ -20,5 +20,9 @@ return [
     Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['all' => true],
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     Sonata\UserBundle\SonataUserBundle::class => ['all' => true],
+    Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle::class => ['all' => true],
     Symfony\Bundle\AclBundle\AclBundle::class => ['all' => true],
+    Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
+    JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
 ];
