@@ -14,6 +14,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 
 class LoginController extends AbstractFOSRestController
+
+
+
 {
     /**
      * @Route("/auth_vk", name="auth_vk")
