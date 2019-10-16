@@ -29,6 +29,9 @@ Once you're done, simply `cd` to your project and run `docker-compose up -d`. Th
 curl -X POST http://localhost:8000/api/login_check
 curl -X POST -H "Content-Type: application/json" http://localhost:8000/api/login_check -d '{"username": "admin", "password":"password"}'
 
+#Generate admin password
+php -r "echo password_hash('ThePassword', PASSWORD_BCRYPT, ['cost' => 13]) . PHP_EOL;"
+
 # Docker compose cheatsheet
 
 **Note:** you need to cd first to where your docker-compose.yml file lives.
