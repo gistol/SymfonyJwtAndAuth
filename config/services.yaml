@@ -4,7 +4,14 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    vk.api.url: '%env(VK_API_URL)%'
+    vk.api.client.id: '%env(VK_API_CLIENT_ID)%'
+    vk.redirect.uri: '%env(VK_REDIRECT_URI)%'
+    vk.api.version: '%env(VK_API_VERSION)%'
+    vk.api.scope: '%env(VK_API_SCOPE)%'
+    vk.api.secret: '%env(VK_API_SECRET)%'
+    app.scheme: '%env(APP_SCHEME)%'
+    vk.api.redirect.url: 'https://oauth.vk.com/authorize?client_id=%vk.api.client.id%&display=mobile&redirect_uri=%vk.redirect.uri%&scope=%vk.api.scope%&response_type=code&v=%vk.api.version%
 services:
     # default configuration for services in *this* file
     _defaults:

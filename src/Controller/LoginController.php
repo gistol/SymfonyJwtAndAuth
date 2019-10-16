@@ -12,24 +12,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-
 class LoginController extends AbstractFOSRestController
-
-
-
 {
     /**
      * @Route("/auth_vk", name="auth_vk")
      */
     public function getNewsAction()
     {
-
-        $env = [
-            "FIRST" => $_ENV['JWT_SECRET_KEY']
-        ];
-
-
-        return $this->handleView($this->view($env));
+        $vkApiUrl = $this->getParameter('vk.api.redirect.url');
+        echo('<pre>');print_r($vkApiUrl);echo('</pre>');
+        //$url = "https://oauth.vk.com/authorize?client_id=#{Settings.vk.client_id}&display=mobile&redirect_uri=#{Settings.vk.redirect_uri}&scope=#{Settings.vk.scope}&response_type=code&v=#{Settings.vk.version}";
+        return $this->redirect($vkApiUrl, 301);
     }
 
 }
