@@ -44,6 +44,332 @@ class User implements UserInterface
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $bdate;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $cityId;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $vkId;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $vkToken;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $avatarFileName;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $avatarContentType;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $avatarFileSize;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $avatarUpdatedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    private $avatarMeta;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $vkPhone;
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBdate()
+    {
+        return $this->bdate;
+    }
+
+    /**
+     * @param mixed $bdate
+     */
+    public function setBdate($bdate): void
+    {
+        $this->bdate = $bdate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCityId()
+    {
+        return $this->cityId;
+    }
+
+    /**
+     * @param mixed $cityId
+     */
+    public function setCityId($cityId): void
+    {
+        $this->cityId = $cityId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @param mixed $created_at
+     */
+    public function setCreatedAt($created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param mixed $updated_at
+     */
+    public function setUpdatedAt($updated_at): void
+    {
+        $this->updated_at = $updated_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVkId()
+    {
+        return $this->vkId;
+    }
+
+    /**
+     * @param mixed $vkId
+     */
+    public function setVkId($vkId): void
+    {
+        $this->vkId = $vkId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVkToken()
+    {
+        return $this->vkToken;
+    }
+
+    /**
+     * @param mixed $vkToken
+     */
+    public function setVkToken($vkToken): void
+    {
+        $this->vkToken = $vkToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarFileName()
+    {
+        return $this->avatarFileName;
+    }
+
+    /**
+     * @param mixed $avatarFileName
+     */
+    public function setAvatarFileName($avatarFileName): void
+    {
+        $this->avatarFileName = $avatarFileName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarContentType()
+    {
+        return $this->avatarContentType;
+    }
+
+    /**
+     * @param mixed $avatarContentType
+     */
+    public function setAvatarContentType($avatarContentType): void
+    {
+        $this->avatarContentType = $avatarContentType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarFileSize()
+    {
+        return $this->avatarFileSize;
+    }
+
+    /**
+     * @param mixed $avatarFileSize
+     */
+    public function setAvatarFileSize($avatarFileSize): void
+    {
+        $this->avatarFileSize = $avatarFileSize;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarUpdatedAt()
+    {
+        return $this->avatarUpdatedAt;
+    }
+
+    /**
+     * @param mixed $avatarUpdatedAt
+     * @return User
+     */
+    public function setAvatarUpdatedAt($avatarUpdatedAt)
+    {
+        $this->avatarUpdatedAt = $avatarUpdatedAt;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatarMeta(): string
+    {
+        return $this->avatarMeta;
+    }
+
+    /**
+     * @param string $avatarMeta
+     * @return User
+     */
+    public function setAvatarMeta(string $avatarMeta)
+    {
+        $this->avatarMeta = $avatarMeta;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVkPhone()
+    {
+        return $this->vkPhone;
+    }
+
+    /**
+     * @param mixed $vkPhone
+     * @return User
+     */
+    public function setVkPhone($vkPhone)
+    {
+        $this->vkPhone = $vkPhone;
+        return $this;
+    }
+
     public function getNotifications()
     {
         return $this->notifications;
