@@ -16,13 +16,19 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\BooleanType;
+
 
 class AnswerAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('isCorrect', BooleanType::class);
+        $formMapper->add('isCorrect', CheckboxType::class);
+        $formMapper->add('taskId', CheckboxType::class);
+        $formMapper->add('isCorrect', CheckboxType::class);
+        $formMapper->add('isCorrect', CheckboxType::class);
+        $formMapper->add('isCorrect', CheckboxType::class);
+        $formMapper->add('isCorrect', CheckboxType::class);
+
 
     }
 }
