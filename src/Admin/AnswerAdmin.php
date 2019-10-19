@@ -44,5 +44,6 @@ class AnswerAdmin extends AbstractAdmin
         $listMapper->addIdentifier('user_id');
         $listMapper->addIdentifier('answer_id');
         $listMapper->addIdentifier('updated_at');
+        $listMapper->add('lft', TextType::class);
     }
 }
