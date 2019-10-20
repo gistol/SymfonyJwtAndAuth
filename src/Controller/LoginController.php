@@ -67,7 +67,7 @@ class LoginController extends AbstractFOSRestController
             $fields = $con['response'][0];
 
             $user = $userManager->findUserByEmail($email);
-            if(!$user->getId()) {
+            if(!$user) {
                 $user = new User();
             }
 
