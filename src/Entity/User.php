@@ -128,7 +128,7 @@ class User implements UserInterface
     private $vkPhone;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="name")
      */
     private $image;
 
