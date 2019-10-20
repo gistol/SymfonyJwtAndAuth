@@ -36,6 +36,7 @@ class LoginController extends AbstractFOSRestController
      */
     public function getVkCallback(Request $request,
         JWTTokenManagerInterface $JWTManager,
+        UserRepository $userRepository,
         EventDispatcherInterface $eventDispatcher)
     {
         $code = $request->get('code');
@@ -66,10 +67,8 @@ class LoginController extends AbstractFOSRestController
         if(count($con['response'][0]) > 0){
             $fields = $con['response'][0];
 
-            $user = $this->getDoctrine()
-                ->getRepository(UserRepository::class)
-                ->findOneByEmailField($email);
-
+            $user = $userRepository->findOneByEmailField($email);
+echo('<pre>');print_r($user);echo('</pre>');
             if(!$user) {
                 $user = new User();
                 $user->setPassword('qwertyuiop')
