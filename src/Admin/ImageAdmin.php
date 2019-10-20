@@ -24,14 +24,13 @@ class ImageAdmin extends AbstractAdmin
     {
         $formMapper->add('name', TextType::class);
         $formMapper->add('path', TextType::class);
-        $formMapper->add('imageFile', 'sonata_type_model_list');
-        //$formMapper
-        //    ->add('imageFile', VichFileType::class, [
-        //        'label' => 'Image',
-        //        'mapped' => true,
-        //        'multiple' => true,
-        //    ])
-        //;
+        $formMapper
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Image',
+                'mapped' => true,
+                'multiple' => true,
+            ])
+        ;
 
         $formMapper->add('updated_at', DateTimeType::class);
 
