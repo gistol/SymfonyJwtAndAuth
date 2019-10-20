@@ -69,20 +69,33 @@ class LoginController extends AbstractFOSRestController
             $user = $userManager->findUserByEmail($email);
             if(!$user) {
                 $user = new User();
-            }
+                $user->setPassword('qwertyuiop')
+                    ->setVkToken($accessToken)
+                    ->setVkId($userId)
+                    ->setEmail($email)
+                    ->setFirstName( $fields['first_name'])
+                    ->setLastName( $fields['last_name'])
+                    ->setVkPhone( $fields['home_phone'])
+                    ->setRoles(['ROLE_USER']);
 
-            $user->setPassword('qwertyuiop')
-                ->setVkToken($accessToken)
-                ->setVkId($userId)
-                ->setEmail($email)
-                ->setFirstName( $fields['first_name'])
-                ->setLastName( $fields['last_name'])
-                ->setVkPhone( $fields['home_phone'])
-                ->setRoles(['ROLE_USER']);
-            
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($user);
-            $em->flush();
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($user);
+                $em->flush();
+            } else {
+
+                $user->setPassword('qwertyuiop')
+                    ->setVkToken($accessToken)
+                    ->setVkId($userId)
+                    ->setEmail($email)
+                    ->setFirstName( $fields['first_name'])
+                    ->setLastName( $fields['last_name'])
+                    ->setVkPhone( $fields['home_phone'])
+                    ->setRoles(['ROLE_USER']);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($user);
+                $em->flush();
+            }
 
             $jwt = $JWTManager->create($user);
             $appLink = $this->getParameter('app_link').$jwt;
