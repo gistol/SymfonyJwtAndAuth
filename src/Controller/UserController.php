@@ -25,7 +25,7 @@ class UserController extends AbstractFOSRestController
     {
         $repository=$this->getDoctrine()->getRepository(User::class);
         $movies=$repository->findall();
-
+echo('<pre>');print_r($movies);echo('</pre>');die;
         return $this->handleView($this->view($movies));
     }
 
