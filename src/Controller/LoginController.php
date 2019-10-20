@@ -66,9 +66,7 @@ class LoginController extends AbstractFOSRestController
 
         if(count($con['response'][0]) > 0){
             $fields = $con['response'][0];
-
             $user = $userRepository->findOneByEmailField($email);
-echo('<pre>');print_r($user);echo('</pre>');
             if(!$user) {
                 $user = new User();
                 $user->setPassword('qwertyuiop')
@@ -83,22 +81,7 @@ echo('<pre>');print_r($user);echo('</pre>');
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($user);
                 $em->flush();
-            } else {
-
-                $user->setPassword('qwertyuiop')
-                    ->setVkToken($accessToken)
-                    ->setVkId($userId)
-                    ->setEmail($email)
-                    ->setFirstName( $fields['first_name'])
-                    ->setLastName( $fields['last_name'])
-                    ->setVkPhone( $fields['home_phone'])
-                    ->setRoles(['ROLE_USER']);
-
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($user);
-                $em->flush();
             }
-
             $jwt = $JWTManager->create($user);
             $appLink = $this->getParameter('app_link').$jwt;
             echo('<pre>');print_r($appLink);echo('</pre>');die;
