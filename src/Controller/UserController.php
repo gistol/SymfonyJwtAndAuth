@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Security\Core\Security;
+
 
 /**
  * @Route("/api",name="api_")
@@ -21,11 +23,10 @@ class UserController extends AbstractFOSRestController
     /**
      * @Route("/me", name="me")
      */
-    public function getUserAction()
+    public function getUserAction(Security $security)
     {
-        $repository=$this->getDoctrine()->getRepository(User::class);
-        $movies=$repository->findall();
-echo('<pre>');print_r($movies);echo('</pre>');die;
+        $user = $security->getUser();
+        echo('<pre>');print_r($user);echo('</pre>');die;
         return $this->handleView($this->view($movies));
     }
 
