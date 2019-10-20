@@ -128,7 +128,7 @@ class User implements UserInterface
     private $vkPhone;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="id")
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
      */
     private $image;
 
@@ -441,7 +441,7 @@ class User implements UserInterface
     {
         $this->devices = new ArrayCollection();
         $this->notifications = new ArrayCollection();
-        $this->image = new ArrayCollection();
+        //$this->image = new ArrayCollection();
     }
 
     public function getDevices()
