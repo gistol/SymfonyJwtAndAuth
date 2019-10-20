@@ -35,6 +35,10 @@ class QuestionAdmin extends AbstractAdmin
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
         $formMapper->add('image_meta', TextType::class);
+        $formMapper->add('answer', ModelType::class, [
+            'class' => Answer::class,
+            'property' => 'answer_id',
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
