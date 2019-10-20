@@ -56,7 +56,7 @@ class Question {
     private $imageFileSize;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $imageUpdatedAt;
 
@@ -95,9 +95,9 @@ class Question {
     private $answer;
 
     /**
-     * @return ArrayCollection
+     * @return Answer
      */
-    public function getAnswer(): ArrayCollection
+    public function getAnswer(): ?Answer
     {
         return $this->answer;
     }
@@ -340,5 +340,4 @@ class Question {
         $this->answer = new ArrayCollection();
 
     }
-
 }
