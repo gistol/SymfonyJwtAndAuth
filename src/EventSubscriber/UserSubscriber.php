@@ -39,6 +39,7 @@ class UserSubscriber implements EventSubscriberInterface
         $response = $client->request('GET', "https://api.vk.com/method/users.get?user_ids=$vkId&fields=photo_max_orig,city,contacts&v=$vkApiVersion");
         $content = $response->toArray();
 
+        echo('<pre>');print_r($content);echo('</pre>');die;
         $user = new User();
         $user
             ->setFirstName( $content['first_name'])

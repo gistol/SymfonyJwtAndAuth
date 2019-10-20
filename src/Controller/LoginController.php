@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Entity\User;
+use App\Event\UpdateFormVkEvent;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -16,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoginController extends AbstractFOSRestController
 {
@@ -33,10 +35,10 @@ class LoginController extends AbstractFOSRestController
      */
     public function getVkCallback(Request $request,
         UserManagerInterface $userManager,
-        JWTTokenManagerInterface $JWTManager)
+        JWTTokenManagerInterface $JWTManager,
+        EventDispatcherInterface $eventDispatcher)
     {
         $code = $request->get('code');
-
         $client = HttpClient::create();
         $response = $client->request('GET', $this->getParameter('vk.api.access.token').$code);
         $content = $response->toArray();
@@ -44,19 +46,23 @@ class LoginController extends AbstractFOSRestController
         $userId = $content['user_id'];
 
         $user = new User();
-        $user
-            ->setVkToken($accessToken)
-            ->setVkId($userId)
-            ->setRoles(['ROLE_USER'])
-        ;
+        $user->setPassword('qwertyuiop')
+        ->setVkToken($accessToken)
+        ->setVkId($userId)
+        ->setEmail('ru@ru.ru')
+        ->setRoles(['ROLE_USER']);
 
-        try {
-            $userManager->createUser($user);
-        } catch (\Exception $e) {
-            $jwt = $JWTManager->create($user);
-            $appLink = $this->getParameter('app_link').$jwt;
-            return $this->redirect($appLink, 301);
-        }
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        $userRegisteredEvent = new UpdateFormVkEvent($user);
+        $eventDispatcher->dispatch($userRegisteredEvent);
+
+        $jwt = $JWTManager->create($user);
+        $appLink = $this->getParameter('app_link').$jwt;
+        echo('<pre>');print_r($appLink);echo('</pre>');die;
+        return $this->redirect($appLink, 301);
     }
 
 }
