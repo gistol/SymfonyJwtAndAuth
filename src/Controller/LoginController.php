@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Entity\User;
 use App\Event\UpdateFormVkEvent;
+use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -34,7 +35,6 @@ class LoginController extends AbstractFOSRestController
      * @Route("/vk_callback", name="vk_callback")
      */
     public function getVkCallback(Request $request,
-        UserManagerInterface $userManager,
         JWTTokenManagerInterface $JWTManager,
         EventDispatcherInterface $eventDispatcher)
     {
@@ -66,7 +66,10 @@ class LoginController extends AbstractFOSRestController
         if(count($con['response'][0]) > 0){
             $fields = $con['response'][0];
 
-            $user = $userManager->findUserByEmail($email);
+            $user = $this->getDoctrine()
+                ->getRepository(UserRepository::class)
+                ->findOneByEmailField($email);
+
             if(!$user) {
                 $user = new User();
                 $user->setPassword('qwertyuiop')
