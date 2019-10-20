@@ -74,6 +74,21 @@ services:
         arguments: [~, App\Entity\News, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: News }
+
+    App\Admin\AnswerAdmin:
+        arguments: [~, App\Entity\Answer, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Answer }
+
+    App\Admin\QuestionAdmin:
+        arguments: [~, App\Entity\Question, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Question }
+
+    App\Admin\TaskAdmin:
+        arguments: [~, App\Entity\Task, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Task }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
