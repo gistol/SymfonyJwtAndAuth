@@ -142,23 +142,23 @@ class User implements UserInterface
 
     public function addImage(Image $image): ?self
     {
-        if (!$this->image->contains($image)) {
+        //if (!$this->image->contains($image)) {
             $this->image = $image;
             $image->setUser($this);
-        }
+        //}
 
         return $this;
     }
 
     public function removeImage(Image $image): ?self
     {
-        if ($this->image->contains($image)) {
+        //if ($this->image->contains($image)) {
             $this->image->removeElement($image);
             // set the owning side to null (unless already changed)
             if ($image->getUser() === $this) {
                 $image->setUser(null);
             }
-        }
+        //}
         return $this;
     }
 

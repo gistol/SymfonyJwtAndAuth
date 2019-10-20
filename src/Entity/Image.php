@@ -119,4 +119,22 @@ class Image
         $this->updatedAt = $updatedAt;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return \App\Entity\Image
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
 }
