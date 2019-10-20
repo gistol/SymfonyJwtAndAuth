@@ -87,7 +87,5 @@ class LoginController extends AbstractFOSRestController
             echo('<pre>');print_r($appLink);echo('</pre>');die;
             return $this->redirect($appLink, 301);
         }
-        
     }
-
 }
