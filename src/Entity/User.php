@@ -132,10 +132,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $firstName
+     * @return \App\Entity\User
      */
-    public function setFirstName($firstName): void
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+        return $this;
     }
 
     /**
@@ -148,10 +150,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $lastName
+     * @return \App\Entity\User
      */
-    public function setLastName($lastName): void
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+        return $this;
     }
 
     /**
@@ -164,10 +168,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $bdate
+     * @return \App\Entity\User
      */
-    public function setBdate($bdate): void
+    public function setBdate($bdate)
     {
         $this->bdate = $bdate;
+        return $this;
     }
 
     /**
@@ -180,10 +186,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $cityId
+     * @return \App\Entity\User
      */
-    public function setCityId($cityId): void
+    public function setCityId($cityId)
     {
         $this->cityId = $cityId;
+        return $this;
     }
 
     /**
@@ -196,10 +204,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $created_at
+     * @return \App\Entity\User
      */
-    public function setCreatedAt($created_at): void
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
+        return $this;
     }
 
     /**
@@ -212,10 +222,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $updated_at
+     * @return \App\Entity\User
      */
-    public function setUpdatedAt($updated_at): void
+    public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
+        return $this;
     }
 
     /**
@@ -228,10 +240,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $vkId
+     * @return \App\Entity\User
      */
-    public function setVkId($vkId): void
+    public function setVkId($vkId)
     {
         $this->vkId = $vkId;
+        return $this;
     }
 
     /**
@@ -244,10 +258,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $vkToken
+     * @return \App\Entity\User
      */
-    public function setVkToken($vkToken): void
+    public function setVkToken($vkToken)
     {
         $this->vkToken = $vkToken;
+        return $this;
     }
 
     /**
@@ -260,10 +276,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $avatarFileName
+     * @return \App\Entity\User
      */
-    public function setAvatarFileName($avatarFileName): void
+    public function setAvatarFileName($avatarFileName)
     {
         $this->avatarFileName = $avatarFileName;
+        return $this;
     }
 
     /**
@@ -276,10 +294,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $avatarContentType
+     * @return \App\Entity\User
      */
-    public function setAvatarContentType($avatarContentType): void
+    public function setAvatarContentType($avatarContentType)
     {
         $this->avatarContentType = $avatarContentType;
+        return $this;
     }
 
     /**
@@ -292,10 +312,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $avatarFileSize
+     * @return \App\Entity\User
      */
-    public function setAvatarFileSize($avatarFileSize): void
+    public function setAvatarFileSize($avatarFileSize)
     {
         $this->avatarFileSize = $avatarFileSize;
+        return $this;
     }
 
     /**

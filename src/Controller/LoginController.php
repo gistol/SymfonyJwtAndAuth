@@ -6,10 +6,12 @@ use App\Entity\News;
 use App\Entity\User;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +31,9 @@ class LoginController extends AbstractFOSRestController
     /**
      * @Route("/vk_callback", name="vk_callback")
      */
-    public function getVkCallback(Request $request, UserManagerInterface $userManager)
+    public function getVkCallback(Request $request,
+        UserManagerInterface $userManager,
+        JWTTokenManagerInterface $JWTManager)
     {
         $code = $request->get('code');
 
@@ -39,37 +43,20 @@ class LoginController extends AbstractFOSRestController
         $accessToken = $content['access_token'];
         $userId = $content['user_id'];
 
-
         $user = new User();
         $user
-            ->setUsername($username)
-            ->setPlainPassword($password)
-            ->setEmail($email)
-            ->setEnabled(true)
+            ->setVkToken($accessToken)
+            ->setVkId($userId)
             ->setRoles(['ROLE_USER'])
-            ->setSuperAdmin(false)
         ;
 
         try {
-            $userManager->updateUser($user);
+            $userManager->createUser($user);
         } catch (\Exception $e) {
-            return new JsonResponse(["error" => $e->getMessage()], 500);
+            $jwt = $JWTManager->create($user);
+            $appLink = $this->getParameter('app_link').$jwt;
+            return $this->redirect($appLink, 301);
         }
-
-//        user = User.find_or_create_by! vk_id: vk_id
-//        user.vk_token = token
-//        user.save!
-
-
-        //user.update_form_vk
-
-        //jwt = Knock::AuthToken.new payload: { sub: user.id }
-
-//        "egeapp://auth?jwt=#{jwt}"
-
-        return $this->redirect($vkApiUrl, 301);
     }
-
-
 
 }
