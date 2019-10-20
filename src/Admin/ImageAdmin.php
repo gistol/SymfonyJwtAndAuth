@@ -38,16 +38,11 @@ class ImageAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('title');
-        $datagridMapper->add('isPublished');
-        $datagridMapper->add('sendPush');
-        $datagridMapper->add('created_at');
-        $datagridMapper->add('updated_at');
+
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('title');
-        $listMapper->addIdentifier('isPublished');
+
     }
 }

@@ -22,6 +22,12 @@ class UsersAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email', TextType::class);
+        $formMapper
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Image',
+                'mapped' => true,
+            ])
+        ;
 
     }
 
