@@ -123,6 +123,41 @@ class User implements UserInterface
     private $vkPhone;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
+     */
+    private $image;
+
+    /**
+     * @return Image
+     */
+    public function getImages(): Image
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->image->contains($image)) {
+            $this->image->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getFirstName()

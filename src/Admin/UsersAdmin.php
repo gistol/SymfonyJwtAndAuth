@@ -15,12 +15,20 @@ use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UsersAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email', TextType::class);
+        $formMapper
+            ->add('name')
+            ->add('images', VichFileType::class, [
+                'label' => 'Image',
+                'mapped' => true,
+            ])
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
