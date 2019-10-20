@@ -3,6 +3,7 @@
 
 namespace App\Admin;
 
+use App\Entity\Task;
 use App\Entity\Answer;
 use App\Entity\Question;
 use Faker\Provider\Text;
@@ -19,31 +20,38 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
-class AnswerAdmin extends AbstractAdmin
+class TaskAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('isCorrect', CheckboxType::class);
-        $formMapper->add('taskId', TextType::class);
-        $formMapper->add('parentId', TextType::class);
-        $formMapper->add('lft', TextType::class);
-        $formMapper->add('rgt', TextType::class);
+        $formMapper->add('number', TextType::class);
+        $formMapper->add('topicId', TextType::class);
+        $formMapper->add('mode', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
+        $formMapper->add('level_id', TextType::class);
+        $formMapper->add('export', CheckboxType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $datagridMapper->add('number');
+        $datagridMapper->add('topicId');
+        $datagridMapper->add('mode');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
+        $datagridMapper->add('levelId');
+        $datagridMapper->add('export');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('created_at');
-        $listMapper->addIdentifier('user_id');
-        $listMapper->addIdentifier('answer_id');
-        $listMapper->addIdentifier('updated_at');
-        $listMapper->add('lft', TextType::class);
+        $listMapper->add('number');
+        $listMapper->add('topicId');
+        $listMapper->add('mode');
+        $listMapper->add('created_at');
+        $listMapper->add('updated_at');
+        $listMapper->add('level_id');
+        $listMapper->add('export');
     }
 }
