@@ -133,7 +133,7 @@ class User implements UserInterface
     private $image;
 
     /**
-     * @return Image
+     * @return Image|ArrayCollection
      */
     public function getImage()
     {
