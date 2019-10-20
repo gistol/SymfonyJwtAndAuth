@@ -128,14 +128,14 @@ class User implements UserInterface
     private $vkPhone;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user")
      */
     private $image;
 
     /**
      * @return Collection|Image[]
      */
-    public function getImage(): Collection
+    public function getImage(): ?Collection
     {
         return $this->image;
     }
