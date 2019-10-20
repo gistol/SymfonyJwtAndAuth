@@ -26,7 +26,7 @@ class UserController extends AbstractFOSRestController
     public function getUserAction(Security $security)
     {
         $username = $this->getUser()->getUsername();
-        $image = $this->getUser()->getImage()->getImageFile();
+        $image = $this->getUser()->getVkId();
 
         echo('<pre>');print_r($image);echo('</pre>');
         echo('<pre>');print_r($username);echo('</pre>');
