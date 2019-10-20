@@ -12,26 +12,42 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\DatePickerType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class UsersAdmin extends AbstractAdmin
+class ImageAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('email', TextType::class);
+        $formMapper->add('name', TextType::class);
+        $formMapper->add('path', TextType::class);
+        $formMapper
+            ->add('imageFile', VichFileType::class, [
+                'label' => 'Image',
+                'mapped' => true,
+            ])
+        ;
+
+        $formMapper->add('created_at', DateTimeType::class);
+
 
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('email');
+        $datagridMapper->add('title');
+        $datagridMapper->add('isPublished');
+        $datagridMapper->add('sendPush');
+        $datagridMapper->add('created_at');
+        $datagridMapper->add('updated_at');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('email');
+        $listMapper->addIdentifier('title');
+        $listMapper->addIdentifier('isPublished');
     }
 }
