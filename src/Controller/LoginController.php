@@ -45,19 +45,27 @@ class LoginController extends AbstractFOSRestController
         $accessToken = $content['access_token'];
         $userId = $content['user_id'];
 
+        $vkApiVersion = $this->getParameter('vk.api.version');
+        $cl = HttpClient::create();
+        $res = $cl->request('GET', "https://api.vk.com/method/users.get?user_ids=$userId&fields=photo_max_orig,city,contacts&v=$vkApiVersion");
+        $con = $res->toArray();
+
+        echo('<pre>');print_r($con);echo('</pre>');
+        echo('<pre>');print_r($content);echo('</pre>');die;
+
         $user = new User();
         $user->setPassword('qwertyuiop')
         ->setVkToken($accessToken)
         ->setVkId($userId)
         ->setEmail('ru@ru.ru')
+        ->setFirstName( $con['first_name'])
+        ->setLastName( $con['last_name'])
+        ->setVkPhone( $con['mobile_phone'])
         ->setRoles(['ROLE_USER']);
 
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($user);
         $em->flush();
-
-        $userRegisteredEvent = new UpdateFormVkEvent($user);
-        $eventDispatcher->dispatch($userRegisteredEvent);
 
         $jwt = $JWTManager->create($user);
         $appLink = $this->getParameter('app_link').$jwt;
