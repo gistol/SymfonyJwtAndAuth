@@ -335,9 +335,9 @@ class Question {
         return $this;
     }
 
-    public function __construct()
-    {
-        $this->answer = new ArrayCollection();
-
-    }
+    //public function __construct()
+    //{
+    //    $this->answer = new ArrayCollection();
+    //
+    //}
 }
