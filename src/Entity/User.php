@@ -441,7 +441,7 @@ class User implements UserInterface
     {
         $this->devices = new ArrayCollection();
         $this->notifications = new ArrayCollection();
-        $this->image = new ArrayCollection();
+        //$this->image = new ArrayCollection();
     }
 
     public function getDevices()
