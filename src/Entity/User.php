@@ -135,12 +135,12 @@ class User implements UserInterface
     /**
      * @return Collection|Image
      */
-    public function getImage()
+    public function getImageFile()
     {
         return $this->image;
     }
 
-    public function addImage(Image $image): ?self
+    public function addImageFile(Image $image): ?self
     {
         if (!$this->image->contains($image)) {
             $this->image = $image;
@@ -150,7 +150,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeImage(Image $image): ?self
+    public function removeImageFile(Image $image): ?self
     {
         if ($this->image->contains($image)) {
             $this->image->removeElement($image);
