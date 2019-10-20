@@ -4,6 +4,7 @@
 namespace App\Admin;
 
 use App\Entity\Device;
+use App\Entity\Image;
 use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -22,12 +23,10 @@ class UsersAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email', TextType::class);
-        $formMapper
-            ->add('image', VichFileType::class, [
-                'label' => 'Image',
-                'mapped' => true,
-            ])
-        ;
+        $formMapper->add('image', ModelType::class, [
+            'class' => Image::class,
+            'property' => 'name',
+        ]);
 
     }
 
