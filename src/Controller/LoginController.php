@@ -65,7 +65,12 @@ class LoginController extends AbstractFOSRestController
 
         if(count($con['response'][0]) > 0){
             $fields = $con['response'][0];
-            $user = new User();
+
+            $user = $userManager->findUserByEmail($email);
+            if(!$user->getId()) {
+                $user = new User();
+            }
+
             $user->setPassword('qwertyuiop')
                 ->setVkToken($accessToken)
                 ->setVkId($userId)
