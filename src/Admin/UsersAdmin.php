@@ -23,8 +23,7 @@ class UsersAdmin extends AbstractAdmin
     {
         $formMapper->add('email', TextType::class);
         $formMapper
-            ->add('name')
-            ->add('images', VichFileType::class, [
+            ->add('image', VichFileType::class, [
                 'label' => 'Image',
                 'mapped' => true,
             ])
