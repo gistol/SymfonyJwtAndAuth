@@ -128,14 +128,14 @@ class User implements UserInterface
     private $vkPhone;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
      */
     private $image;
 
     /**
-     * @return Collection|Image[]
+     * @return Image
      */
-    public function getImage(): ?Collection
+    public function getImage(): ?Image
     {
         return $this->image;
     }
@@ -143,7 +143,7 @@ class User implements UserInterface
     public function addImage(Image $image): self
     {
         if (!$this->image->contains($image)) {
-            $this->image[] = $image;
+            $this->image = $image;
             $image->setUser($this);
         }
 

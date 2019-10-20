@@ -33,7 +33,7 @@ class Image
     private $path;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="image")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="image")
      */
     private $user;
 
