@@ -83,7 +83,7 @@ class Image
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): ?self
     {
         $this->name = $name;
 
@@ -95,7 +95,7 @@ class Image
         return $this->path;
     }
 
-    public function setPath($path): self
+    public function setPath($path): ?self
     {
         $this->path = $path;
 
