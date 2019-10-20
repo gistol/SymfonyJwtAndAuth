@@ -130,7 +130,7 @@ class User implements UserInterface
     /**
      * @return Image
      */
-    public function getImages(): Image
+    public function getImage(): Image
     {
         return $this->image;
     }
