@@ -32,6 +32,10 @@ class Image
      */
     private $path;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="image")
+     */
+    private $user;
 
     /**
      * @Vich\UploadableField(mapping="items", fileNameProperty="path")
