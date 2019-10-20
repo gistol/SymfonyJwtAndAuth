@@ -31,7 +31,7 @@ class ImageAdmin extends AbstractAdmin
             ])
         ;
 
-        $formMapper->add('created_at', DateTimeType::class);
+        $formMapper->add('updated_at', DateTimeType::class);
 
 
     }
