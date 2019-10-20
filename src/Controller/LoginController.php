@@ -77,7 +77,7 @@ class LoginController extends AbstractFOSRestController
                 ->setEmail($email)
                 ->setFirstName( $fields['first_name'])
                 ->setLastName( $fields['last_name'])
-                ->setVkPhone( $fields['mobile_phone'])
+                ->setVkPhone( $fields['home_phone'])
                 ->setRoles(['ROLE_USER']);
             
             $em = $this->getDoctrine()->getEntityManager();
