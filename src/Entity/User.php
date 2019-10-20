@@ -135,7 +135,7 @@ class User implements UserInterface
     /**
      * @return Collection|Image[]
      */
-    public function getImages(): ?Collection
+    public function getImage(): ?Collection
     {
         return $this->image;
     }
