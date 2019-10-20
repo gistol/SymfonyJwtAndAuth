@@ -26,8 +26,7 @@ class UserController extends AbstractFOSRestController
     public function getUserAction(Security $security)
     {
         $user = $security->getUser();
-        echo('<pre>');print_r($user);echo('</pre>');die;
-        return $this->handleView($this->view($movies));
+        return $this->handleView($this->view($user));
     }
 
 }
