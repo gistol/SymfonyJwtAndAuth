@@ -28,6 +28,7 @@ class ImageAdmin extends AbstractAdmin
             ->add('imageFile', VichFileType::class, [
                 'label' => 'Image',
                 'mapped' => true,
+                'multiple' => true,
             ])
         ;
 
