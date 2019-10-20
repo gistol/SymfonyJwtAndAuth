@@ -133,19 +133,19 @@ class User implements UserInterface
     private $image;
 
     /**
-     * @return Image|ArrayCollection
+     * @return Collection|Image[]
      */
-    public function getImage()
+    public function getImage(): Collection
     {
         return $this->image;
     }
 
-    public function addImage(Image $image): ?self
+    public function addImage(Image $image): self
     {
-        //if (!$this->image->contains($image)) {
-            $this->image = $image;
+        if (!$this->image->contains($image)) {
+            $this->image[] = $image;
             $image->setUser($this);
-        //}
+        }
 
         return $this;
     }
