@@ -15,6 +15,7 @@ parameters:
 
     vk.api.access.token: 'https://oauth.vk.com/access_token?client_id=%vk.api.client.id%&client_secret=%vk.api.secret%&redirect_uri=%vk.redirect.uri%&code='
 
+    app_link: "egeapp://auth?jwt="
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -88,6 +89,11 @@ services:
         arguments: [~, App\Entity\Task, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Task }
+
+    App\Admin\ImageAdmin:
+        arguments: [~, App\Entity\Image, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Image }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:

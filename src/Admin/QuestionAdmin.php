@@ -29,12 +29,16 @@ class QuestionAdmin extends AbstractAdmin
         $formMapper->add('image_file_name', TextType::class);
         $formMapper->add('image_content_type', TextType::class);
         $formMapper->add('image_file_size', TextType::class);
-        $formMapper->add('image_updated_at', TextType::class);
+        $formMapper->add('image_updated_at', DateTimeType::class);
         $formMapper->add('text', TextType::class);
         $formMapper->add('weight', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
         $formMapper->add('image_meta', TextType::class);
+        $formMapper->add('answer', ModelType::class, [
+            'class' => Answer::class,
+            'property' => 'id',
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

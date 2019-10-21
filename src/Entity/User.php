@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -19,7 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $email;
 
@@ -30,7 +35,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
@@ -45,82 +50,116 @@ class User implements UserInterface
     private $notifications;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $bdate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $cityId;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $vkId;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $vkToken;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $avatarFileName;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $avatarContentType;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $avatarFileSize;
 
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $avatarUpdatedAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $avatarMeta;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $vkPhone;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
+     */
+    private $image;
+
+    /**
+     * @return Image
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): ?self
+    {
+        if ($this->image->contains($image)) {
+            $this->image->removeElement($image);
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -132,10 +171,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $firstName
+     * @return \App\Entity\User
      */
-    public function setFirstName($firstName): void
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+        return $this;
     }
 
     /**
@@ -148,10 +189,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $lastName
+     * @return \App\Entity\User
      */
-    public function setLastName($lastName): void
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+        return $this;
     }
 
     /**
@@ -164,10 +207,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $bdate
+     * @return \App\Entity\User
      */
-    public function setBdate($bdate): void
+    public function setBdate($bdate)
     {
         $this->bdate = $bdate;
+        return $this;
     }
 
     /**
@@ -180,10 +225,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $cityId
+     * @return \App\Entity\User
      */
-    public function setCityId($cityId): void
+    public function setCityId($cityId)
     {
         $this->cityId = $cityId;
+        return $this;
     }
 
     /**
@@ -196,10 +243,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $created_at
+     * @return \App\Entity\User
      */
-    public function setCreatedAt($created_at): void
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
+        return $this;
     }
 
     /**
@@ -212,10 +261,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $updated_at
+     * @return \App\Entity\User
      */
-    public function setUpdatedAt($updated_at): void
+    public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
+        return $this;
     }
 
     /**
@@ -228,10 +279,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $vkId
+     * @return \App\Entity\User
      */
-    public function setVkId($vkId): void
+    public function setVkId($vkId)
     {
         $this->vkId = $vkId;
+        return $this;
     }
 
     /**
@@ -244,10 +297,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $vkToken
+     * @return \App\Entity\User
      */
-    public function setVkToken($vkToken): void
+    public function setVkToken($vkToken)
     {
         $this->vkToken = $vkToken;
+        return $this;
     }
 
     /**
@@ -260,10 +315,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $avatarFileName
+     * @return \App\Entity\User
      */
-    public function setAvatarFileName($avatarFileName): void
+    public function setAvatarFileName($avatarFileName)
     {
         $this->avatarFileName = $avatarFileName;
+        return $this;
     }
 
     /**
@@ -276,10 +333,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $avatarContentType
+     * @return \App\Entity\User
      */
-    public function setAvatarContentType($avatarContentType): void
+    public function setAvatarContentType($avatarContentType)
     {
         $this->avatarContentType = $avatarContentType;
+        return $this;
     }
 
     /**
@@ -292,10 +351,12 @@ class User implements UserInterface
 
     /**
      * @param mixed $avatarFileSize
+     * @return \App\Entity\User
      */
-    public function setAvatarFileSize($avatarFileSize): void
+    public function setAvatarFileSize($avatarFileSize)
     {
         $this->avatarFileSize = $avatarFileSize;
+        return $this;
     }
 
     /**
@@ -379,6 +440,7 @@ class User implements UserInterface
     {
         $this->devices = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        //$this->image = new ArrayCollection();
     }
 
     public function getDevices()

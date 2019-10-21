@@ -51,7 +51,7 @@ class Question
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="datetime")
      */
     private $imageUpdatedAt;
 
@@ -307,6 +307,7 @@ class Question
         return $this;
     }
 
+<<<<<<< HEAD
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -334,4 +335,11 @@ class Question
 
 
 
+=======
+    //public function __construct()
+    //{
+    //    $this->answer = new ArrayCollection();
+    //
+    //}
+>>>>>>> 24323cfcc5172367c9c2d9b69b232e8f8ac416df
 }
