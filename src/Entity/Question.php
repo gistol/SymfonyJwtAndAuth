@@ -86,7 +86,6 @@ class Question
     private $answers;
 
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -289,6 +288,7 @@ class Question
         $this->updated_at = $updated_at;
         return $this;
     }
+
     /**
      * @return string
      */
@@ -307,16 +307,17 @@ class Question
         return $this;
     }
 
-<<<<<<< HEAD
-    public function __construct()
-    {
-        $this->answers = new ArrayCollection();
-    }
 
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
+    /* public function __construct()
+     {
+         $this->answers = new ArrayCollection();
+     }
+
+     public function getAnswers()
+     {
+         return $this->answers;
+     }*/
+}
 
 
 
