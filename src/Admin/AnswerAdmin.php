@@ -25,7 +25,7 @@ class AnswerAdmin extends AbstractAdmin
     {
         $formMapper->add('isCorrect', CheckboxType::class);
         $formMapper->add('taskId', TextType::class);
-        $formMapper->add('parentId', TextType::class);
+        $formMapper->add('questionId', TextType::class);
         $formMapper->add('lft', TextType::class);
         $formMapper->add('rgt', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);

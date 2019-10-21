@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Entity;
-use Doctrine\Common\Collections\ArrayCollection;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Faker\Provider\Text;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
  */
-class Question {
 
+class Question
+{
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -18,11 +20,9 @@ class Question {
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-     private $sourceType;
+    private $sourceType;
 
     /**
      * @ORM\Column(type="integer")
@@ -30,30 +30,25 @@ class Question {
     private $sourceId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-     private $mode;
+    private $mode;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-      private $imageFileName;
+    private $imageFileName;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-     private $imageContentType;
+    private $imageContentType;
 
     /**
      * @ORM\Column(type="integer")
      */
     private $imageFileSize;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -61,8 +56,6 @@ class Question {
     private $imageUpdatedAt;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
     private $text;
@@ -83,35 +76,14 @@ class Question {
     private $updated_at;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
     private $imageMeta;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Answer", inversedBy="questions")
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="parentId")
      */
-    private $answer;
-
-    /**
-     * @return Answer
-     */
-    public function getAnswer(): ?Answer
-    {
-        return $this->answer;
-    }
-
-    /**
-     * @param Answer $answer
-     * @return Question
-     */
-    public function setAnswer(Answer $answer)
-    {
-        $this->answer = $answer;
-        return $this;
-    }
-
+    private $answers;
 
 
     public function getId(): ?int
@@ -335,9 +307,40 @@ class Question {
         return $this;
     }
 
+
+    /* public function __construct()
+     {
+         $this->answers = new ArrayCollection();
+     }
+
+     public function getAnswers()
+     {
+         return $this->answers;
+     }*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
     //public function __construct()
     //{
     //    $this->answer = new ArrayCollection();
     //
     //}
+>>>>>>> 24323cfcc5172367c9c2d9b69b232e8f8ac416df
 }

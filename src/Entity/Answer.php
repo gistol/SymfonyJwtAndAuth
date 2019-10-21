@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Answer
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     */
+    private $user;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -29,7 +37,7 @@ class Answer
     /**
      * @ORM\Column(type="integer")
      */
-    private $parentId;
+    private $questionId;
 
     /**
      * @ORM\Column(type="integer")
@@ -51,11 +59,6 @@ class Answer
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="parentId")
-     */
-    private $question;
 
     public function getId(): ?int
     {
@@ -98,23 +101,6 @@ class Answer
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * @param mixed $parentId
-     * @return Answer
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -185,6 +171,42 @@ class Answer
     public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQuestionId()
+    {
+        return $this->questionId;
+    }
+
+    /**
+     * @param mixed $questionId
+     * @return Answer
+     */
+    public function setQuestionId($questionId)
+    {
+        $this->questionId = $questionId;
+        return $this;
+    }
+
+    /**
+     * @return Question
+     */
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param Question $question
+     * @return Question
+     */
+    public function setQuestion(User $question)
+    {
+        $this->question = $question;
         return $this;
     }
 }
