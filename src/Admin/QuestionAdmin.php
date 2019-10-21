@@ -37,7 +37,7 @@ class QuestionAdmin extends AbstractAdmin
         $formMapper->add('image_meta', TextType::class);
         $formMapper->add('answer', ModelType::class, [
             'class' => Answer::class,
-            'property' => 'answer_id',
+            'property' => 'id',
         ]);
     }
 
