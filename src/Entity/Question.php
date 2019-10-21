@@ -56,7 +56,7 @@ class Question {
     private $imageFileSize;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="datetime")
      */
     private $imageUpdatedAt;
 
