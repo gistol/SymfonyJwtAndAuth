@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Answer;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\Mapping as ORM;
-use Faker\Provider\Text;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
  */
+class Question {
 
-class Question
-{
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -20,71 +20,92 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     private $sourceType;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $sourceId;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     private $mode;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     private $imageFileName;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     private $imageContentType;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $imageFileSize;
 
-
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $imageUpdatedAt;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     private $text;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $weight;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
      */
     private $imageMeta;
 
     /**
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="parentId")
+     * Как подключить: https://symfony.ru/doc/current/doctrine/associations.html
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
      */
     private $answers;
 
+    /**
+     * @param ArrayCollection $answers
+     * @return Question
+     */
+    public function setAnswers(ArrayCollection $answers)
+    {
+        $this->answers = $answers;
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -267,6 +288,7 @@ class Question
      */
     public function setCreatedAt($created_at)
     {
+
         $this->created_at = $created_at;
         return $this;
     }
@@ -307,40 +329,34 @@ class Question
         return $this;
     }
 
+    public function __construct()
+        {
+            $this->answers = new ArrayCollection();
+        }
+    /**
+     * @return Collection|Answer[]
+     */
+        public function getAnswers()
+        {
+            return $this->answers;
+        }
 
-    /* public function __construct()
-     {
-         $this->answers = new ArrayCollection();
-     }
+    public function addAnswer(Answer $answer)
+    {
+        if ($this->answers->contains($answer)) {
+            return;
+        }
 
-     public function getAnswers()
-     {
-         return $this->answers;
-     }*/
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+        $this->answers[] = $answer;
+        // установите *владеющую* сторону!
+        $answer->setQuestion($this);
+    }
 
 
 
 
 
-=======
-    //public function __construct()
-    //{
-    //    $this->answer = new ArrayCollection();
-    //
-    //}
->>>>>>> 24323cfcc5172367c9c2d9b69b232e8f8ac416df
+
+
+
 }
