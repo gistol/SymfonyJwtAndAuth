@@ -119,7 +119,7 @@ class UserAnswer
     /**
      * @param mixed $updated_at
      */
-    public function setUpdatedAt($updated_at): void
+    public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
     }
@@ -140,7 +140,7 @@ class UserAnswer
     /**
      * @param mixed $userTaskId
      */
-    public function setUserTaskId($userTaskId): void
+    public function setUserTaskId($userTaskId)
     {
         $this->userTaskId = $userTaskId;
     }
