@@ -17,64 +17,9 @@ class Levels
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $number;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $courseId;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $imageFileName;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $imageContentType;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $imageFileSize;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $imageUpdatedAt;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $imageMeta;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return mixed
@@ -83,6 +28,103 @@ class Levels
     {
         return $this->number;
     }
+
+    /**
+     * @param mixed $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $courseId;
+
+    /**
+     * @return mixed
+     */
+    public function getCourseId()
+    {
+        return $this->courseId;
+    }
+
+    /**
+     * @param mixed $courseId
+     */
+    public function setCourseId($courseId): void
+    {
+        $this->courseId = $courseId;
+    }
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $imageFileName;
+
+    /**
+     * @return mixed
+     */
+    public function getImageContentType()
+    {
+        return $this->imageContentType;
+    }
+
+    /**
+     * @param mixed $imageContentType
+     */
+    public function setImageContentType($imageContentType)
+    {
+        $this->imageContentType = $imageContentType;
+    }
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $imageContentType;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $imageFileSize;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $imageUpdatedAt;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $imageMeta;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+
 
     /**
      * @return string
@@ -120,21 +162,7 @@ class Levels
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function courseId()
-    {
-        return $this->courseId;
-    }
 
-    /**
-     * @return string
-     */
-    public function getCourseId(): ?string
-    {
-        return $this->courseId;
-    }
 
     /**
      * @return mixed
@@ -191,27 +219,52 @@ class Levels
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getImageContentType(): ?string
+    public function getImageFileSize()
     {
-        return $this->imageContentType;
+        return $this->imageFileSize;
     }
 
     /**
-     * @param string $imageContentType
-     * @return Levels
+     * @param mixed $imageFileSize
      */
-    public function setImageContentType(string $imageContentType)
+    public function setImageFileSize($imageFileSize)
     {
-        $this->imageFileName = $imageContentType;
-        return $this;
+        $this->imageFileSize = $imageFileSize;
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function getImageUpdatedAt()
+    {
+        return $this->imageUpdatedAt;
+    }
 
+    /**
+     * @param mixed $imageUpdatedAt
+     */
+    public function setImageUpdatedAt($imageUpdatedAt)
+    {
+        $this->imageUpdatedAt = $imageUpdatedAt;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getImageMeta()
+    {
+        return $this->imageMeta;
+    }
 
-
+    /**
+     * @param mixed $imageMeta
+     */
+    public function setImageMeta($imageMeta)
+    {
+        $this->imageMeta = $imageMeta;
+    }
 
 }
