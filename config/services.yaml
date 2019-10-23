@@ -94,6 +94,11 @@ services:
         arguments: [~, App\Entity\Image, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Image }
+
+    App\Admin\LevelsAdmin:
+        arguments: [~, App\Entity\Levels, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Levels }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
