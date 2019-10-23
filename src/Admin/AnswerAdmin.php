@@ -25,11 +25,15 @@ class AnswerAdmin extends AbstractAdmin
     {
         $formMapper->add('isCorrect', CheckboxType::class);
         $formMapper->add('taskId', TextType::class);
-        $formMapper->add('questionId', TextType::class);
+        $formMapper->add('parentId', TextType::class);
         $formMapper->add('lft', TextType::class);
         $formMapper->add('rgt', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
+        $formMapper->add('question', ModelType::class, [
+            'class' => Question::class,
+            'property' => 'id',
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -44,6 +48,6 @@ class AnswerAdmin extends AbstractAdmin
         $listMapper->addIdentifier('user_id');
         $listMapper->addIdentifier('answer_id');
         $listMapper->addIdentifier('updated_at');
-        $listMapper->add('lft', TextType::class);
+        $listMapper->addIdentifier('lft');
     }
 }

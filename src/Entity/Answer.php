@@ -12,10 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Answer
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
-     */
-    private $user;
 
     /**
      * @ORM\Id()
@@ -37,7 +33,7 @@ class Answer
     /**
      * @ORM\Column(type="integer")
      */
-    private $questionId;
+    private $parentId;
 
     /**
      * @ORM\Column(type="integer")
@@ -59,6 +55,30 @@ class Answer
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $question;
+
+    /**
+     * @return mixed
+     */
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param mixed $question
+     * @return Answer
+     */
+    public function setQuestion(Question $question)
+    {
+        $this->question = $question;
+        return  $this;
+    }
 
     public function getId(): ?int
     {
@@ -177,36 +197,44 @@ class Answer
     /**
      * @return mixed
      */
-    public function getQuestionId()
+    public function getParentId()
     {
-        return $this->questionId;
+        return $this->parentId;
     }
 
     /**
-     * @param mixed $questionId
+     * @param mixed $parentId
      * @return Answer
      */
-    public function setQuestionId($questionId)
+    public function setParentId($parentId)
     {
-        $this->questionId = $questionId;
+        $this->parentId = $parentId;
         return $this;
     }
 
-    /**
-     * @return Question
-     */
-    public function getQuestion(): ?Question
+    public function showAction($id)
     {
-        return $this->question;
+        $answer = $this->getDoctrine()
+            -> getRepository(Answer::class)
+            ->find($id);
+
+        $questionName = $answer->getQuestion()->getAnswers();
     }
 
-    /**
-     * @param Question $question
-     * @return Question
-     */
-    public function setQuestion(User $question)
+    public function showAnswerAction($id)
     {
-        $this->question = $question;
-        return $this;
+        $question = $this->getDoctrine()
+            ->getRepository(Question::class)
+            ->find($id);
+
+        $answer = $question->getProducts();
     }
+
+
+
+
+
+
+
+
 }
