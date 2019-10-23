@@ -104,6 +104,13 @@ services:
         arguments: [~, App\Entity\UserAnswer, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: UserAnswer }
+
+    App\Admin\ResourceCategoriesAdmin:
+        arguments: [~, App\Entity\ResourceCategories, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: ResourceCategories }
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
