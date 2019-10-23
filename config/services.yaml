@@ -99,6 +99,11 @@ services:
         arguments: [~, App\Entity\Levels, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Levels }
+
+    App\Admin\UserAnswerAdmin:
+        arguments: [~, App\Entity\UserAnswer, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserAnswer }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
