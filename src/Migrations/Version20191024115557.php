@@ -22,7 +22,6 @@ final class Version20191024115557 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE ar_internal_metadata');
         $this->addSql('ALTER TABLE topics CHANGE title title VARCHAR(255) DEFAULT NULL, CHANGE description description VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE answer CHANGE question_id question_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE image CHANGE user_id user_id INT DEFAULT NULL, CHANGE path path VARCHAR(255) DEFAULT NULL');
@@ -44,7 +43,6 @@ final class Version20191024115557 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE ar_internal_metadata (id INT AUTO_INCREMENT NOT NULL, `key` VARCHAR(255) DEFAULT \'NULL\' COLLATE utf8mb4_unicode_ci, value VARCHAR(255) DEFAULT \'NULL\' COLLATE utf8mb4_unicode_ci, created_at DATETIME DEFAULT \'NULL\', updated_at DATETIME DEFAULT \'NULL\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('ALTER TABLE acl_entries CHANGE object_identity_id object_identity_id INT UNSIGNED DEFAULT NULL, CHANGE field_name field_name VARCHAR(50) DEFAULT \'NULL\' COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE acl_object_identities CHANGE parent_object_identity_id parent_object_identity_id INT UNSIGNED DEFAULT NULL');
         $this->addSql('ALTER TABLE answer CHANGE question_id question_id INT DEFAULT NULL');
