@@ -110,6 +110,16 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: ResourceCategories }
 
+    App\Admin\ResourcesAdmin:
+        arguments: [~, App\Entity\Resources, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Resources }
+
+    App\Admin\TopicsAdmin:
+        arguments: [~, App\Entity\Topics, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Topics }
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
