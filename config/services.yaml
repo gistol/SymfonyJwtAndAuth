@@ -120,6 +120,13 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Topics }
 
+    App\Admin\TriggersAdmin:
+        arguments: [~, App\Entity\Triggers, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Triggers }
+
+
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

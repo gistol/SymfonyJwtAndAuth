@@ -3,7 +3,7 @@
 
 namespace App\Admin;
 
-use App\Entity\ResourceCategories;
+use App\Entity\Task;
 use App\Entity\Answer;
 use App\Entity\Question;
 use Faker\Provider\Text;
@@ -18,34 +18,36 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Json;
 
-
-class ResourceCategoriesAdmin extends AbstractAdmin
+class TriggersAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('imageFileName', TextType::class);
-        $formMapper->add('imageContentType', TextType::class);
         $formMapper->add('title', TextType::class);
-        $formMapper->add('imageFileSize', TextType::class);
-        $formMapper->add('imageUpdatedAt', DateTimeType::class);
-        $formMapper->add('videoFileName', TextType::class);
-        $formMapper->add('videoContentType', TextType::class);
-        $formMapper->add('videoFileSize', TextType::class);
-        $formMapper->add('videoUpdatedAt', DateTimeType::class);
+        $formMapper->add('text', TextType::class);
+        $formMapper->add('reiteration', TextType::class);
+        $formMapper->add('currentTrigger', TextType::class);
+        $formMapper->add('sourceType', TextType::class);
+        $formMapper->add('sourceId', TextType::class);
+        $formMapper->add('targetType', TextType::class);
+        $formMapper->add('targetId', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
-        $formMapper->add('imageMeta', TextType::class);
+        $formMapper->add('triggerData', TextType::class);
+
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $datagridMapper->add('text');
         $datagridMapper->add('title');
-        $datagridMapper->add('imageFileName');
-        $datagridMapper->add('imageContentType');
-        $datagridMapper->add('imageUpdatedAt');
-        $datagridMapper->add('videoFileName');
-        $datagridMapper->add('videoUpdatedAt');
+        $datagridMapper->add('reiteration');
+        $datagridMapper->add('currentTrigger');
+        $datagridMapper->add('sourceType');
+        $datagridMapper->add('sourceId');
+        $datagridMapper->add('targetType');
+        $datagridMapper->add('targetId');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
     }
@@ -53,12 +55,18 @@ class ResourceCategoriesAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->add('title');
-        $listMapper->add('imageFileName');
-        $listMapper->add('imageContentType');
-        $listMapper->add('imageUpdatedAt');
-        $listMapper->add('videoFileName');
-        $listMapper->add('videoUpdatedAt');
+        $listMapper->add('text');
+        $listMapper->add('reiteration');
+        $listMapper->add('currentTrigger');
+        $listMapper->add('sourceType');
+        $listMapper->add('sourceId');
+        $listMapper->add('targetType');
+        $listMapper->add('targetId');
         $listMapper->add('created_at');
         $listMapper->add('updated_at');
+        $listMapper->add('triggerData');
+
     }
+
+
 }
