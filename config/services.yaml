@@ -125,6 +125,16 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Triggers }
 
+    App\Admin\UserLevelsAdmin:
+        arguments: [~, App\Entity\UserLevels, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserLevels }
+
+
+
+
+
+
 
 
 
