@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -127,37 +128,29 @@ class User implements UserInterface
      */
     private $vkPhone;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
-     */
-    private $image;
 
     /**
-     * @return Image
+     * @ORM\OneToOne( targetEntity="App\Entity\Document", orphanRemoval=true, cascade={"persist", "remove"} )
+     * @ORM\JoinColumn(name="document_file_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    public function getImage(): ?Image
+    private $document;
+
+
+    /**
+     * @return \App\Entity\Document|null
+     */
+    public function getDocument(): ?Document
     {
-        return $this->image;
+        return $this->document;
     }
 
-    public function addImage(Image $image): self
+    /**
+     * @param \App\Entity\Document $document
+     * @return User
+     */
+    public function setDocument(Document $document)
     {
-        if (!$this->image->contains($image)) {
-            $this->image = $image;
-            $image->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): ?self
-    {
-        if ($this->image->contains($image)) {
-            $this->image->removeElement($image);
-            if ($image->getUser() === $this) {
-                $image->setUser(null);
-            }
-        }
+        $this->document = $document;
         return $this;
     }
 
@@ -533,4 +526,6 @@ class User implements UserInterface
     {
         return $this->email;
     }
+
+
 }
