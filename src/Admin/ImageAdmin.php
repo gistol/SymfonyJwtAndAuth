@@ -5,6 +5,7 @@ namespace App\Admin;
 
 use App\Entity\Device;
 use App\Entity\User;
+use App\Form\UploadDocumentType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -24,8 +25,9 @@ class ImageAdmin extends AbstractAdmin
     {
         $formMapper->add('name', TextType::class);
         $formMapper->add('path', TextType::class);
+
         $formMapper
-            ->add('imageFile', VichFileType::class, [
+            ->add('myDocument', UploadDocumentType::class, [
                 'label' => 'Image',
                 'mapped' => true,
             ])

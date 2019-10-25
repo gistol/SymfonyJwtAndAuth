@@ -19,7 +19,7 @@ vich_uploader:
     mappings:
         document:
             inject_on_load: true
-            uri_prefix: "%env(AWS_BASE_URL)%/%env(AWS_BUCKET_NAME)%/document"
+            uri_prefix: "%env(AWS_BASE_URL)%/%env(AWS_BUCKET_NAME)%/ege"
             upload_destination: document_fs
             delete_on_update:   false
             delete_on_remove:   false
