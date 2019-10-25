@@ -26,9 +26,26 @@ class UserController extends AbstractFOSRestController
     public function getUserAction(Security $security)
     {
         $username = $this->getUser()->getUsername();
-        $image = $this->getUser()->getImage();
 
-        echo('<pre>');print_r($image);echo('</pre>');
+        $s3 = new \Aws\S3\S3Client([
+            'version' => 'latest',
+            'region'  => 'us-east-1',
+            'endpoint' => 'https://mc.s3.syndev.ru',
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key'    => '1PPVM5833KTFWKV9QGLH',
+                'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
+            ],
+        ]);
+
+        //https://mc.s3.syndev.ru/minio/ege/
+        $insert = $s3->putObject([
+            'Bucket' => 'ege',
+            'Key'    => 'testkey',
+            'Body'   => 'Hello from MinIO!!'
+        ]);
+        echo "<pre>"; print_r($insert);echo "</pre>";
+
         echo('<pre>');print_r($username);echo('</pre>');
         return $this->handleView($this->view($username));
     }

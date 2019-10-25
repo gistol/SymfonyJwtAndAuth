@@ -130,29 +130,28 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\OneToOne( targetEntity="App\Entity\Document", orphanRemoval=true, cascade={"persist", "remove"} )
+     * @ORM\OneToOne( targetEntity="\App\Entity\Document", orphanRemoval=true, cascade={"persist", "remove"} )
      * @ORM\JoinColumn(name="document_file_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    private $document;
-
+    private $myDocument;
 
     /**
-     * @return \App\Entity\Document|null
+     * @return mixed
      */
-    public function getDocument(): ?Document
+    public function getMyDocument()
     {
-        return $this->document;
+        return $this->myDocument;
     }
 
     /**
-     * @param \App\Entity\Document $document
-     * @return User
+     * @param mixed $myDocument
      */
-    public function setDocument(Document $document)
+    public function setMyDocument($myDocument): void
     {
-        $this->document = $document;
-        return $this;
+        $this->myDocument = $myDocument;
     }
+
+
 
     /**
      * @return mixed
@@ -526,6 +525,8 @@ class User implements UserInterface
     {
         return $this->email;
     }
+
+
 
 
 }

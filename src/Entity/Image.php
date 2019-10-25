@@ -21,6 +21,13 @@ class Image
     private $id;
 
     /**
+     * @ORM\OneToOne( targetEntity="\App\Entity\Document", orphanRemoval=true, cascade={"persist", "remove"} )
+     * @ORM\JoinColumn(name="document_file_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $myDocument;
+
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @var string $name
      */
@@ -136,5 +143,21 @@ class Image
     {
         $this->user = $user;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMyDocument()
+    {
+        return $this->myDocument;
+    }
+
+    /**
+     * @param mixed $myDocument
+     */
+    public function setMyDocument($myDocument): void
+    {
+        $this->myDocument = $myDocument;
     }
 }
