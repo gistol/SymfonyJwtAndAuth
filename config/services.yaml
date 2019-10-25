@@ -25,6 +25,17 @@ services:
     Cocur\Slugify\Slugify:
         autowire: true
 
+    ct_file_store.s3:
+        class: Aws\S3\S3Client
+        factory: [Aws\S3\S3Client, 'factory']
+        arguments:
+            -
+                version: 'latest'
+                region: 'us-east-1'
+                credentials:
+                    key: '%env(AWS_KEY)%'
+                    secret: '%env(AWS_SECRET_KEY)%'
+
     mailer:
         alias: fos_user.mailer.noop
         public: true
@@ -94,50 +105,6 @@ services:
         arguments: [~, App\Entity\Image, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Image }
-
-    App\Admin\LevelsAdmin:
-        arguments: [~, App\Entity\Levels, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Levels }
-
-    App\Admin\UserAnswerAdmin:
-        arguments: [~, App\Entity\UserAnswer, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: UserAnswer }
-
-    App\Admin\ResourceCategoriesAdmin:
-        arguments: [~, App\Entity\ResourceCategories, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: ResourceCategories }
-
-    App\Admin\ResourcesAdmin:
-        arguments: [~, App\Entity\Resources, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Resources }
-
-    App\Admin\TopicsAdmin:
-        arguments: [~, App\Entity\Topics, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Topics }
-
-    App\Admin\TriggersAdmin:
-        arguments: [~, App\Entity\Triggers, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Triggers }
-
-    App\Admin\UserLevelsAdmin:
-        arguments: [~, App\Entity\UserLevels, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: UserLevels }
-
-
-
-
-
-
-
-
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
