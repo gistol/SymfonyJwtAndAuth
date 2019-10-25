@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -121,6 +126,40 @@ class User implements UserInterface
      * @ORM\Column(type="string", nullable=true)
      */
     private $vkPhone;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", mappedBy="user")
+     */
+    private $image;
+
+    /**
+     * @return Image
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): ?self
+    {
+        if ($this->image->contains($image)) {
+            $this->image->removeElement($image);
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -401,6 +440,7 @@ class User implements UserInterface
     {
         $this->devices = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        //$this->image = new ArrayCollection();
     }
 
     public function getDevices()

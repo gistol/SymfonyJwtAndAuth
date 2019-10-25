@@ -3,9 +3,8 @@
 
 namespace App\Admin;
 
-use App\Entity\Answer;
-use App\Entity\Question;
-use Faker\Provider\Text;
+use App\Entity\UserAnswer;
+use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -18,36 +17,32 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-
-class AnswerAdmin extends AbstractAdmin
+class UserAnswerAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('isCorrect', CheckboxType::class);
-        $formMapper->add('taskId', TextType::class);
-        $formMapper->add('parentId', TextType::class);
-        $formMapper->add('lft', TextType::class);
-        $formMapper->add('rgt', TextType::class);
+        $formMapper->add('userId', TextType::class);
+        $formMapper->add('answerId', TextType::class);
+        $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
-        $formMapper->add('question', ModelType::class, [
-            'class' => Question::class,
-            'property' => 'id',
-        ]);
+        $formMapper->add('userTaskId', TextType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $datagridMapper->add('userId');
+        $datagridMapper->add('answerId');
+        $datagridMapper->add('status');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
+
+        $listMapper->addIdentifier('userId');
         $listMapper->addIdentifier('created_at');
-        $listMapper->addIdentifier('user_id');
-        $listMapper->addIdentifier('answer_id');
         $listMapper->addIdentifier('updated_at');
-        $listMapper->addIdentifier('lft');
     }
 }

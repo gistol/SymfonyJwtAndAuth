@@ -1,6 +1,5 @@
 version: "3.1"
 services:
-
     mysql:
       image: mariadb:10.2
       container_name: docker-symfony4-mysql
@@ -14,6 +13,7 @@ services:
         - MYSQL_PASSWORD=dbpw
       ports:
         - "8002:3306"
+      command: ["--default-authentication-plugin=mysql_native_password"]
 
     webserver:
       image: nginx:alpine

@@ -16,6 +16,7 @@ Note: you may place the files elsewhere in your project. Make sure you modify th
 * openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
 * openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 * //// php bin/console doctrine:migrations:diff
+* bin/console doctrine:schema:update --force
 * php bin/console doctrine:migrations:migrate
 * bin/console acl:init
 * bin/console fos:user:create --super-admin
@@ -55,6 +56,12 @@ php -r "echo password_hash('ThePassword', PASSWORD_BCRYPT, ['cost' => 13]) . PHP
   * To clear volumes: `docker volume rm $(docker volume ls -q)`
   * To clear networks: `docker network rm $(docker network ls | tail -n+2 | awk '{if($2 !~ /bridge|none|host/){ print $1 }}')`
 
+#S3 ACCESS 
+    
+     Link: "https://mc.s3.syndev.ru"
+     
+    AccessKey: "1PPVM5833KTFWKV9QGLH" 
+    SecretKey: "BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq"
 
 
 Disclaimer: This project has been generated on phpdocker.io

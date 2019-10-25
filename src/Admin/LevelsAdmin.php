@@ -3,6 +3,7 @@
 
 namespace App\Admin;
 
+use App\Entity\Levels;
 use App\Entity\Answer;
 use App\Entity\Question;
 use Faker\Provider\Text;
@@ -19,35 +20,41 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
-class AnswerAdmin extends AbstractAdmin
+class LevelsAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('isCorrect', CheckboxType::class);
-        $formMapper->add('taskId', TextType::class);
-        $formMapper->add('parentId', TextType::class);
-        $formMapper->add('lft', TextType::class);
-        $formMapper->add('rgt', TextType::class);
+        $formMapper->add('number', TextType::class);
+        $formMapper->add('title', TextType::class);
+        $formMapper->add('description', TextType::class);
+        $formMapper->add('courseId', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
-        $formMapper->add('question', ModelType::class, [
-            'class' => Question::class,
-            'property' => 'id',
-        ]);
+        $formMapper->add('imageFileName', TextType::class);
+        $formMapper->add('imageContentType', TextType::class);
+        $formMapper->add('imageFileSize', TextType::class);
+        $formMapper->add('imageUpdatedAt', DateTimeType::class);
+        $formMapper->add('imageMeta', TextType::class);
+//        $formMapper->add('imageContentType', TextType::class, [
+//            'class' => Question::class,
+//            'property' => 'id',
+//        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $datagridMapper->add('number');
+        $datagridMapper->add('title');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        $listMapper->addIdentifier('number');
+        $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('created_at');
-        $listMapper->addIdentifier('user_id');
-        $listMapper->addIdentifier('answer_id');
         $listMapper->addIdentifier('updated_at');
-        $listMapper->addIdentifier('lft');
+
     }
 }

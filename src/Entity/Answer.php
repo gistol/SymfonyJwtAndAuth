@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Answer
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -53,9 +57,28 @@ class Answer
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="parentId")
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $question;
+
+    /**
+     * @return mixed
+     */
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param mixed $question
+     * @return Answer
+     */
+    public function setQuestion(Question $question)
+    {
+        $this->question = $question;
+        return  $this;
+    }
 
     public function getId(): ?int
     {
@@ -98,23 +121,6 @@ class Answer
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * @param mixed $parentId
-     * @return Answer
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -187,4 +193,48 @@ class Answer
         $this->updated_at = $updated_at;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * @param mixed $parentId
+     * @return Answer
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+        return $this;
+    }
+
+    public function showAction($id)
+    {
+        $answer = $this->getDoctrine()
+            -> getRepository(Answer::class)
+            ->find($id);
+
+        $questionName = $answer->getQuestion()->getAnswers();
+    }
+
+    public function showAnswerAction($id)
+    {
+        $question = $this->getDoctrine()
+            ->getRepository(Question::class)
+            ->find($id);
+
+        $answer = $question->getProducts();
+    }
+
+
+
+
+
+
+
+
 }
