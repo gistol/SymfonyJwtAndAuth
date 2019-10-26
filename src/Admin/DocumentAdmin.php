@@ -19,32 +19,27 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class ImageAdmin extends AbstractAdmin
+class DocumentAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        //$formMapper->add('name', TextType::class);
-        $formMapper->add('path', TextType::class);
 
-        $formMapper
-            ->add('myDocument', UploadDocumentType::class, [
-                'label' => 'Image',
-                'mapped' => true,
-            ])
-        ;
-
-        $formMapper->add('updated_at', DateTimeType::class);
-
+        $formMapper->add('updatedAt', DateTimeType::class);
+        $formMapper->add('documentFileName', TextType::class);
+        $formMapper->add('documentFile', VichFileType::class, [
+        ]);
 
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-
+        $datagridMapper->add('updatedAt');
+        $datagridMapper->add('documentFileName');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-
+        $listMapper->addIdentifier('updatedAt');
+        $listMapper->addIdentifier('documentFileName');
     }
 }

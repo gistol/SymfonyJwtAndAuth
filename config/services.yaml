@@ -33,6 +33,8 @@ services:
             -
                 version: 'latest'
                 region: 'us-east-1'
+                endpoint: '%env(AWS_BASE_URL)%'
+                use_path_style_endpoint: true
                 credentials:
                     key: '%env(AWS_KEY)%'
                     secret: '%env(AWS_SECRET_KEY)%'
@@ -106,6 +108,11 @@ services:
         arguments: [~, App\Entity\Image, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Image }
+
+    App\Admin\DocumentAdmin:
+        arguments: [~, App\Entity\Document, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Document }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
