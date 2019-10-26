@@ -4,6 +4,7 @@
 namespace App\Admin;
 
 use App\Entity\Device;
+use App\Entity\Document;
 use App\Entity\Image;
 use App\Entity\User;
 use App\Form\UploadDocumentType;
@@ -24,20 +25,12 @@ class UsersAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email', TextType::class);
-//        $formMapper
-//            ->add('image', ModelType::class, [
-//            'class' => Image::class,
-//            'property' => 'name',
-//        ]);
 
-        $formMapper->add('myDocument', UploadDocumentType::class);
-
-//        $formMapper->add('myDocument', VichFileType::class, [
-//            'label'         => false,
-//            'required'      => false,
-//            'allow_delete'  => false,
-//            'download_link' => true,
-//        ]);
+        $formMapper
+            ->add('myDocument', ModelType::class, [
+            'class' => Document::class,
+            'property' => 'documentFileName',
+        ]);
 
     }
 

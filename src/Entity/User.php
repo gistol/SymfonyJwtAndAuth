@@ -130,10 +130,20 @@ class User implements UserInterface
 
 
     /**
+     * @var $myDocument \App\Entity\Document
+     *
      * @ORM\OneToOne( targetEntity="\App\Entity\Document", orphanRemoval=true, cascade={"persist", "remove"} )
      * @ORM\JoinColumn(name="document_file_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $myDocument;
+
+    public function __construct()
+    {
+        $this->devices = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        //$this->image = new ArrayCollection();
+    }
+
 
     /**
      * @return mixed
@@ -428,12 +438,6 @@ class User implements UserInterface
         return $this->notifications;
     }
 
-    public function __construct()
-    {
-        $this->devices = new ArrayCollection();
-        $this->notifications = new ArrayCollection();
-        //$this->image = new ArrayCollection();
-    }
 
     public function getDevices()
     {
