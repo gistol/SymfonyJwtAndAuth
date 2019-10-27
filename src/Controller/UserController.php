@@ -6,6 +6,7 @@ use App\Entity\Document;
 use App\Entity\News;
 use App\Entity\User;
 use App\Repository\DocumentRepository;
+use App\Repository\UserRepository;
 use App\Service\S3Service;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
@@ -39,14 +40,17 @@ class UserController extends AbstractFOSRestController
      */
     public function getUserAction(Security $security,
         DocumentRepository $documentRepository,
+        UserRepository $userRepository,
         S3Service $s3Service)
     {
         /** @var \App\Entity\User $user */
-        $user = $this->getUser();
+        //$user = $this->getUser();
+        $user = $userRepository->findOneByEmailField($user->getEmail());
+
 
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
-        echo('<pre>');print_r($user->getEmail());echo('</pre>');die;
+        echo('<pre>');print_r($user);echo('</pre>');die;
         return $this->handleView($this->view($user));
     }
 
