@@ -20,6 +20,14 @@ use Symfony\Component\Security\Core\Security;
  */
 class UserController extends AbstractFOSRestController
 {
+
+    private $ct_file_store;
+
+    public function __construct(\Aws\S3\S3Client $ct_file_store)
+    {
+        $this->ct_file_store = $ct_file_store;
+    }
+
     /**
      * @Route("/me", name="me")
      */
@@ -27,7 +35,7 @@ class UserController extends AbstractFOSRestController
     {
         $username = $this->getUser()->getUsername();
 
-        $s3 = $this->container->get('ct_file_store.s3');
+        $s3 = $this->ct_file_store;
 
         //$s3 = new \Aws\S3\S3Client([
         //    'version' => 'latest',
