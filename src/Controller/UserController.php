@@ -27,7 +27,7 @@ class UserController extends AbstractFOSRestController
     {
         $username = $this->getUser()->getUsername();
 
-        $s3 = $this->get('ct_file_store.s3');
+        $s3 = $this->container->get('ct_file_store.s3');
 
         //$s3 = new \Aws\S3\S3Client([
         //    'version' => 'latest',
