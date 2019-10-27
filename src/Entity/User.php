@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class User implements UserInterface
 {
+    public const RANDOM_STRING = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -530,7 +532,34 @@ class User implements UserInterface
         return $this->email;
     }
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cities", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $cities;
 
+    public function getCities(): ?Cities
+    {
+        return $this->cities;
+    }
 
+    public function setCities(Cities $cities)
+    {
+        $this->cities = $cities;
+    }
 
+    /**
+     * @return string
+     */
+    public function generatePassword()
+    {
+        $stringLength = strlen(self::RANDOM_STRING);
+        $code = '';
+
+        for ($i = 0; $i < $stringLength; $i++) {
+            $code .= self::RANDOM_STRING[rand(0, $stringLength - 1)];
+        }
+
+        return $code;
+    }
 }

@@ -22,6 +22,14 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $bucket: 'ege'
+            $s3arguments:
+                credentials:
+                    key: '%env(AWS_KEY)%'
+                    secret: '%env(AWS_SECRET_KEY)%'
+                region: 'us-east-1'
+                version: 'latest'
 
     Cocur\Slugify\Slugify:
         autowire: true
@@ -38,6 +46,17 @@ services:
                 credentials:
                     key: '%env(AWS_KEY)%'
                     secret: '%env(AWS_SECRET_KEY)%'
+
+    s3_storage:
+        class: App\Service\S3Service
+        arguments:
+            $bucket: 'ege'
+            $s3arguments:
+                credentials:
+                    key: '%env(AWS_KEY)%'
+                    secret: '%env(AWS_SECRET_KEY)%'
+                region: 'us-east-1'
+                version: 'latest'
 
     mailer:
         alias: fos_user.mailer.noop
@@ -113,6 +132,11 @@ services:
         arguments: [~, App\Entity\Document, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Document }
+
+    App\Admin\UserTaskAdmin:
+        arguments: [~, App\Entity\UserTask, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserTask }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:
