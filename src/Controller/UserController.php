@@ -47,6 +47,7 @@ class UserController extends AbstractFOSRestController
         $user = $this->getUser();
         $user = $userRepository->findOneByEmailField($user->getEmail());
 
+        echo('<pre>');print_r($user->getMyDocument()->getDocumentFileName());echo('</pre>');
 
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
