@@ -47,15 +47,6 @@ class LoginController extends AbstractFOSRestController
 
         $s3 = $s3Service->getS3Client();
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $doc = new Document();
-        $doc->setDocumentFileName('luxfon.com-33612.jpg');
-        $doc->setUpdatedAt(new \DateTime);
-
-        $em->persist($doc);
-        $em->flush();
-
-
         $code = $request->get('code');
         $client = HttpClient::create();
         $response = $client->request('GET', $this->getParameter('vk.api.access.token').$code);
@@ -96,20 +87,20 @@ class LoginController extends AbstractFOSRestController
                     ->setVkPhone( $fields['home_phone'])
                     ->setRoles(['ROLE_USER']);
 
-
-                $s3 = $s3->upload(
-                    'ege',
-                    basename($fields['photo_max_orig']),
-                    file_get_contents($fields['photo_max_orig']),
-                    'public-read'
-                );
-
-                if($s3) {
-                    //$em = $this->getDoctrine()->getEntityManager();
-                    $doc = new Document();
-                    $doc->setDocumentFileName($fields['photo_max_orig']);
-                    $doc->setUpdatedAt(new \DateTime);
-                    $user->setMyDocument($doc);
+                if(strlen($fields['photo_max_orig']) > 0) {
+                    $photo_max_orig = basename(explode('?',$fields['photo_max_orig'])[0]);
+                    $s3 = $s3->upload(
+                        'ege',
+                        $photo_max_orig,
+                        file_get_contents($fields['photo_max_orig']),
+                        'public-read'
+                    );
+                    if($s3) {
+                        $doc = new Document();
+                        $doc->setDocumentFileName($photo_max_orig);
+                        $doc->setUpdatedAt(new \DateTime);
+                        $user->setMyDocument($doc);
+                    }
                 }
 
                 $em = $this->getDoctrine()->getEntityManager();
