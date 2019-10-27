@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Entity\News;
 use App\Entity\User;
 use App\Event\UpdateFormVkEvent;
+use App\Repository\DocumentRepository;
 use App\Repository\UserRepository;
+use App\Service\S3Service;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -37,8 +40,22 @@ class LoginController extends AbstractFOSRestController
     public function getVkCallback(Request $request,
         JWTTokenManagerInterface $JWTManager,
         UserRepository $userRepository,
+        DocumentRepository $documentRepository,
+        S3Service $s3Service,
         EventDispatcherInterface $eventDispatcher)
     {
+
+        $s3 = $s3Service->getS3Client();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $doc = new Document();
+        $doc->setDocumentFileName('luxfon.com-33612.jpg');
+        $doc->setUpdatedAt(new \DateTime);
+
+        $em->persist($doc);
+        $em->flush();
+
+
         $code = $request->get('code');
         $client = HttpClient::create();
         $response = $client->request('GET', $this->getParameter('vk.api.access.token').$code);
@@ -51,6 +68,7 @@ class LoginController extends AbstractFOSRestController
         $cl = HttpClient::create();
         $res = $cl->request('GET', "https://api.vk.com/method/users.get?access_token=$accessToken&user_ids=$userId&fields=photo_max_orig,city,contacts&v=$vkApiVersion");
         $con = $res->toArray();
+
 
         //[id] => 13637121
         //[first_name] => Сергей
@@ -77,6 +95,22 @@ class LoginController extends AbstractFOSRestController
                     ->setLastName( $fields['last_name'])
                     ->setVkPhone( $fields['home_phone'])
                     ->setRoles(['ROLE_USER']);
+
+
+                $s3 = $s3->upload(
+                    'ege',
+                    basename($fields['photo_max_orig']),
+                    file_get_contents($fields['photo_max_orig']),
+                    'public-read'
+                );
+
+                if($s3) {
+                    //$em = $this->getDoctrine()->getEntityManager();
+                    $doc = new Document();
+                    $doc->setDocumentFileName($fields['photo_max_orig']);
+                    $doc->setUpdatedAt(new \DateTime);
+                    $user->setMyDocument($doc);
+                }
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($user);
