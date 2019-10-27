@@ -536,7 +536,7 @@ class User implements UserInterface
      */
     private $cities;
 
-    public function getCities(): Cities
+    public function getCities(): ?Cities
     {
         return $this->cities;
     }

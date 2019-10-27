@@ -21,6 +21,7 @@ class UserAdminAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email', TextType::class);
+        $formMapper->add('email', TextType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
