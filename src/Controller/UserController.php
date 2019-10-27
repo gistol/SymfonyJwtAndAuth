@@ -52,9 +52,19 @@ class UserController extends AbstractFOSRestController
         //    'Key'    => $user->getMyDocument()->getDocumentFileName(),
         //]);
 
+
         $file = $s3Service->getS3Client()->getObjectUrl($s3Service->getBucket(), $user->getMyDocument()->getDocumentFileName());
 
-        echo('<pre>');print_r($file);echo('</pre>');
+        $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
+            'Bucket' => $s3Service->getBucket(),
+            'Key' => $user->getMyDocument()->getDocumentFileName()
+        ]);
+
+        $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
+
+        echo('<pre>');print_r($request->getBody());echo('</pre>');
+        echo('<pre>');print_r($request->getHeaders());echo('</pre>');
+        echo('<pre>');print_r($request->getUri());echo('</pre>');
 
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
