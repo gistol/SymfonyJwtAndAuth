@@ -56,7 +56,11 @@ class UserController extends AbstractFOSRestController
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
         //echo('<pre>');print_r($user);echo('</pre>');die;
-        return $this->handleView($this->view($file->toArray()));
+        return $this->handleView($this->view([
+            'FILE' => '123',
+            'FILE1' => '123',
+            'FIL2E' => '123',
+        ]));
     }
 
 }
