@@ -44,7 +44,7 @@ class UserController extends AbstractFOSRestController
         S3Service $s3Service)
     {
         /** @var \App\Entity\User $user */
-        //$user = $this->getUser();
+        $user = $this->getUser();
         $user = $userRepository->findOneByEmailField($user->getEmail());
 
 
