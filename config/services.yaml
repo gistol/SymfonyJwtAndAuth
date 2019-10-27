@@ -132,6 +132,11 @@ services:
         arguments: [~, App\Entity\Document, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Document }
+
+    App\Admin\UserTaskAdmin:
+        arguments: [~, App\Entity\UserTask, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserTask }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:

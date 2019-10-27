@@ -530,7 +530,19 @@ class User implements UserInterface
         return $this->email;
     }
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cities", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $cities;
 
+    public function getCities(): Cities
+    {
+        return $this->cities;
+    }
 
-
+    public function setCities(Cities $cities)
+    {
+        $this->cities = $cities;
+    }
 }
