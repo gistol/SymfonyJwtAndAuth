@@ -64,7 +64,7 @@ class UserController extends AbstractFOSRestController
 
         echo('<pre>');print_r($request->getBody());echo('</pre>');
         echo('<pre>');print_r($request->getHeaders());echo('</pre>');
-        echo('<pre>');print_r($request->getUri());echo('</pre>');
+        echo('<pre>');print_r((string)$request->getUri());echo('</pre>');
 
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
