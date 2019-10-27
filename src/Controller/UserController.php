@@ -21,12 +21,6 @@ use Symfony\Component\Security\Core\Security;
 class UserController extends AbstractFOSRestController
 {
 
-    private $ct_file_store;
-
-    public function __construct(\Aws\S3\S3Client $ct_file_store)
-    {
-        $this->ct_file_store = $ct_file_store;
-    }
 
     /**
      * @Route("/me", name="me")
@@ -35,18 +29,16 @@ class UserController extends AbstractFOSRestController
     {
         $username = $this->getUser()->getUsername();
 
-        $s3 = $this->ct_file_store;
-
-        //$s3 = new \Aws\S3\S3Client([
-        //    'version' => 'latest',
-        //    'region'  => 'us-east-1',
-        //    'endpoint' => 'https://mc.s3.syndev.ru',
-        //    'use_path_style_endpoint' => true,
-        //    'credentials' => [
-        //        'key'    => '1PPVM5833KTFWKV9QGLH',
-        //        'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
-        //    ],
-        //]);
+        $s3 = new \Aws\S3\S3Client([
+            'version' => 'latest',
+            'region'  => 'us-east-1',
+            'endpoint' => 'https://mc.s3.syndev.ru',
+            'use_path_style_endpoint' => true,
+            'credentials' => [
+                'key'    => '1PPVM5833KTFWKV9QGLH',
+                'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
+            ],
+        ]);
 
         //https://mc.s3.syndev.ru/minio/ege/
         $insert = $s3->putObject([
