@@ -52,7 +52,7 @@ class UserController extends AbstractFOSRestController
             'Key'    => $user->getMyDocument()->getDocumentFileName(),
         ]);
 
-        echo('<pre>');print_r($file);echo('</pre>');
+        echo('<pre>');print_r($file['Body']);echo('</pre>');
 
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
