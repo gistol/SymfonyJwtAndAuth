@@ -27,21 +27,23 @@ class UserController extends AbstractFOSRestController
     {
         $username = $this->getUser()->getUsername();
 
-        $s3 = new \Aws\S3\S3Client([
-            'version' => 'latest',
-            'region'  => 'us-east-1',
-            'endpoint' => 'https://mc.s3.syndev.ru',
-            'use_path_style_endpoint' => true,
-            'credentials' => [
-                'key'    => '1PPVM5833KTFWKV9QGLH',
-                'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
-            ],
-        ]);
+        $s3 = $this->get('ct_file_store.s3');
+
+        //$s3 = new \Aws\S3\S3Client([
+        //    'version' => 'latest',
+        //    'region'  => 'us-east-1',
+        //    'endpoint' => 'https://mc.s3.syndev.ru',
+        //    'use_path_style_endpoint' => true,
+        //    'credentials' => [
+        //        'key'    => '1PPVM5833KTFWKV9QGLH',
+        //        'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
+        //    ],
+        //]);
 
         //https://mc.s3.syndev.ru/minio/ege/
         $insert = $s3->putObject([
             'Bucket' => 'ege',
-            'Key'    => 'testkey',
+            'Key'    => 'new key',
             'Body'   => 'Hello from MinIO!!'
         ]);
         echo "<pre>"; print_r($insert);echo "</pre>";
