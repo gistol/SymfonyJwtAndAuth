@@ -27,47 +27,27 @@ class UserController extends AbstractFOSRestController
 {
 
     /**
+     * @Route("/news/{id}", name="news_show")
+     */
+    public function showNews(News $news)
+    {
+        return $this->handleView($this->view($news));
+    }
+
+    /**
      * @Route("/me", name="me")
      */
     public function getUserAction(Security $security,
         DocumentRepository $documentRepository,
         S3Service $s3Service)
     {
-        $username = $this->getUser()->getUsername();
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
 
-        //$documentRepository->
-        $em = $this->getDoctrine()->getEntityManager();
-        $doc = new Document();
-        $doc->setDocumentFile(new File('http://luxfon.com/pic/201407/1366x768/luxfon.com-33612.jpg'));
-        $doc->setDocumentFileName('luxfon.com-33612.jpg');
-        $doc->setUpdatedAt(new \DateTime);
+        echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
-        $s3 = $s3Service->getS3Client();
-
-        $s3 = $s3->upload(
-            'ege',
-            'luxfon.com-33612.jpg',
-            file_get_contents('http://luxfon.com/pic/201407/1366x768/luxfon.com-33612.jpg'),
-            'public-read'
-           );
-
-        //$s3 = $s3Service->uploadFile(
-        //    'http://luxfon.com/pic/201407/1366x768/luxfon.com-33612.jpg',
-        //    'luxfon.com-33612.jpg',
-        //    ['contentType' => 'image/jpeg']);
-        echo('<pre>');print_r($s3);echo('</pre>');
-
-
-        //https://mc.s3.syndev.ru/minio/ege/
-        //$insert = $s3->putObject([
-        //    'Bucket' => 'ege',
-        //    'Key'    => 'new key',
-        //    'Body'   => 'Hello from MinIO!!'
-        //]);
-        //echo "<pre>"; print_r($insert);echo "</pre>";
-
-        echo('<pre>');print_r($username);echo('</pre>');
-        return $this->handleView($this->view($username));
+        echo('<pre>');print_r($user);echo('</pre>');
+        return $this->handleView($this->view($user));
     }
 
 }
