@@ -68,7 +68,7 @@ class LoginController extends AbstractFOSRestController
             if(!$user) {
                 $user = new User();
             }
-            $encoded = $encoder->encodePassword($user, $user->generatePassword());
+            $encoded = $encoder->encodePassword($user, 'qwertyuiop');
             $user->setPassword($encoded)
                 ->setVkToken($accessToken)
                 ->setVkId($userId)
