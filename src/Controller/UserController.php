@@ -44,9 +44,9 @@ class UserController extends AbstractFOSRestController
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
 
-        echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
+        //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 
-        echo('<pre>');print_r($user);echo('</pre>');
+        //echo('<pre>');print_r($user);echo('</pre>');
         return $this->handleView($this->view($user));
     }
 
