@@ -47,7 +47,12 @@ class UserController extends AbstractFOSRestController
         $user = $this->getUser();
         $user = $userRepository->findOneByEmailField($user->getEmail());
 
-        echo('<pre>');print_r($user->getMyDocument()->getDocumentFile());echo('</pre>');
+        $file = $s3Service->getS3Client()->getObject([
+            'Bucket' => $s3Service->getBucket(),
+            'Key'    => $user->getMyDocument()->getDocumentFileName(),
+        ]);
+
+        echo('<pre>');print_r($file);echo('</pre>');
 
         //echo('<pre>');print_r($user->getMyDocument());echo('</pre>');
 

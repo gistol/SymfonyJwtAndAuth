@@ -85,7 +85,7 @@ class S3Service
      *
      * @return string
      */
-    protected function getBucket()
+    public function getBucket()
     {
         return $this->bucket;
     }
