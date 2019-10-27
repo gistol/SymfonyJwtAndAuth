@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\News;
-use App\Entity\Post;
 use App\Entity\User;
+use App\Service\S3Service;
+use Aws\S3\S3Client;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,24 +22,24 @@ use Symfony\Component\Security\Core\Security;
 class UserController extends AbstractFOSRestController
 {
 
-
     /**
      * @Route("/me", name="me")
      */
-    public function getUserAction(Security $security)
+    public function getUserAction(Security $security, S3Service $s3Service)
     {
         $username = $this->getUser()->getUsername();
 
-        $s3 = new \Aws\S3\S3Client([
-            'version' => 'latest',
-            'region'  => 'us-east-1',
-            'endpoint' => 'https://mc.s3.syndev.ru',
-            'use_path_style_endpoint' => true,
-            'credentials' => [
-                'key'    => '1PPVM5833KTFWKV9QGLH',
-                'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
-            ],
-        ]);
+        $s3 = $s3Service->getS3Client();
+        //$s3 = new \Aws\S3\S3Client([
+        //    'version' => 'latest',
+        //    'region'  => 'us-east-1',
+        //    'endpoint' => 'https://mc.s3.syndev.ru',
+        //    'use_path_style_endpoint' => true,
+        //    'credentials' => [
+        //        'key'    => '1PPVM5833KTFWKV9QGLH',
+        //        'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
+        //    ],
+        //]);
 
         //https://mc.s3.syndev.ru/minio/ege/
         $insert = $s3->putObject([
