@@ -34,7 +34,7 @@ class UsersAdmin extends AbstractAdmin
         ]);
         $formMapper->add('cities', ModelType::class, [
             'class' => Cities::class,
-            'property' => 'id',
+            'property' => 'name',
         ]);
     }
 
