@@ -6,6 +6,7 @@ use App\Entity\Document;
 use App\Entity\News;
 use App\Entity\User;
 use App\Repository\DocumentRepository;
+use App\Repository\NewsRepository;
 use App\Repository\UserRepository;
 use App\Service\S3Service;
 use Aws\S3\Exception\S3Exception;
@@ -41,25 +42,36 @@ class UserController extends AbstractFOSRestController
     public function getUserAction(Security $security,
         DocumentRepository $documentRepository,
         UserRepository $userRepository,
+        NewsRepository $newsRepository,
         S3Service $s3Service)
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
         $user = $userRepository->findOneByEmailField($user->getEmail());
+        if($user) {
+            $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
+                'Bucket' => $s3Service->getBucket(),
+                'Key' => $user->getMyDocument()->getDocumentFileName()
+            ]);
 
-        $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
-            'Bucket' => $s3Service->getBucket(),
-            'Key' => $user->getMyDocument()->getDocumentFileName()
-        ]);
+            $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
+            echo('<pre>');print_r((string)$request->getUri());echo('</pre>');
+        }
 
-        $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
-        echo('<pre>');print_r((string)$request->getUri());echo('</pre>');
 
-        return $this->handleView($this->view([
-            'FILE' => '123',
-            'FILE1' => '123',
-            'FIL2E' => '123',
-        ]));
+
+        $newses = $newsRepository->findAll();
+        $result = [];
+        foreach ($newses as $news) {
+            $result = [
+               'title' => $news['title'],
+               'description' => $news['description'],
+
+            ];
+        }
+
+
+        return $this->handleView($this->view($result));
     }
 
 }
