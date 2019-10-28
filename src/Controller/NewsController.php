@@ -22,16 +22,18 @@ class NewsController extends AbstractFOSRestController
     /**
      * @Route("/news", name="news")
      */
-    public function getNewsAction()
+    public function getNewsAction(LoggerInterface $logger)
     {
-        $logger = GrayLog::getInstance();
-        $logger->setFacility('NewsController');
-        $logger->setMessage('showNews');
-        $logger->send(['full_message' => []], 'info');
 
         $repository=$this->getDoctrine()->getRepository(News::class);
-        $movies=$repository->findall();
-        return $this->handleView($this->view($movies));
+        $news = $repository->findall();
+        $logger->critical('NewsController',[
+            'facility' => 'NewsController',
+            'data' => print_r($news, true)
+        ]);
+
+
+        return $this->handleView($this->view($news));
     }
 
     /**
