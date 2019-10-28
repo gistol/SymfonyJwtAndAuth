@@ -236,6 +236,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "mlehner/gelf-php": {
+        "version": "v1.1.0"
+    },
     "monolog/monolog": {
         "version": "1.25.1"
     },
