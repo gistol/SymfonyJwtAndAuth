@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Entity\News;
-use App\Entity\Post;
 use App\Entity\User;
+use App\Repository\DocumentRepository;
+use App\Repository\UserRepository;
+use App\Service\S3Service;
+use Aws\S3\Exception\S3Exception;
+use Aws\S3\S3Client;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,34 +26,40 @@ use Symfony\Component\Security\Core\Security;
  */
 class UserController extends AbstractFOSRestController
 {
+
+    /**
+     * @Route("/news/{id}", name="news_show")
+     */
+    public function showNews(News $news)
+    {
+        return $this->handleView($this->view($news));
+    }
+
     /**
      * @Route("/me", name="me")
      */
-    public function getUserAction(Security $security)
+    public function getUserAction(Security $security,
+        DocumentRepository $documentRepository,
+        UserRepository $userRepository,
+        S3Service $s3Service)
     {
-        $username = $this->getUser()->getUsername();
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $user = $userRepository->findOneByEmailField($user->getEmail());
 
-        $s3 = new \Aws\S3\S3Client([
-            'version' => 'latest',
-            'region'  => 'us-east-1',
-            'endpoint' => 'https://mc.s3.syndev.ru',
-            'use_path_style_endpoint' => true,
-            'credentials' => [
-                'key'    => '1PPVM5833KTFWKV9QGLH',
-                'secret' => 'BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq',
-            ],
+        $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
+            'Bucket' => $s3Service->getBucket(),
+            'Key' => $user->getMyDocument()->getDocumentFileName()
         ]);
 
-        //https://mc.s3.syndev.ru/minio/ege/
-        $insert = $s3->putObject([
-            'Bucket' => 'ege',
-            'Key'    => 'testkey',
-            'Body'   => 'Hello from MinIO!!'
-        ]);
-        echo "<pre>"; print_r($insert);echo "</pre>";
+        $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
+        echo('<pre>');print_r((string)$request->getUri());echo('</pre>');
 
-        echo('<pre>');print_r($username);echo('</pre>');
-        return $this->handleView($this->view($username));
+        return $this->handleView($this->view([
+            'FILE' => '123',
+            'FILE1' => '123',
+            'FIL2E' => '123',
+        ]));
     }
 
 }

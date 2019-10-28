@@ -5,6 +5,7 @@ namespace App\Admin;
 
 use App\Entity\Device;
 use App\Entity\User;
+use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -25,6 +26,11 @@ class CitiesAdmin extends AbstractAdmin
         $formMapper->add('name', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
+        $formMapper->add('users', ModelType::class, [
+            'class' => User::class,
+            'property' => 'id',
+            'multiple' => true,
+        ]);
 
     }
 
@@ -34,6 +40,8 @@ class CitiesAdmin extends AbstractAdmin
         $datagridMapper->add('updated_at');
         $datagridMapper->add('externalId');
         $datagridMapper->add('name');
+ ;
+
     }
 
     protected function configureListFields(ListMapper $listMapper)

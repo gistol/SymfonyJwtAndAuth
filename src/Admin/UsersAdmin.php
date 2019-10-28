@@ -3,6 +3,7 @@
 
 namespace App\Admin;
 
+use App\Entity\Cities;
 use App\Entity\Device;
 use App\Entity\Document;
 use App\Entity\Image;
@@ -31,12 +32,16 @@ class UsersAdmin extends AbstractAdmin
             'class' => Document::class,
             'property' => 'documentFileName',
         ]);
-
+        $formMapper->add('cities', ModelType::class, [
+            'class' => Cities::class,
+            'property' => 'id',
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper->add('email');
+
     }
 
     protected function configureListFields(ListMapper $listMapper)

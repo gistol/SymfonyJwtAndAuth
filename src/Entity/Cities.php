@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -115,5 +117,23 @@ class Cities
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="cities")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

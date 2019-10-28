@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Entity\News;
 use App\Entity\User;
 use App\Event\UpdateFormVkEvent;
+use App\Repository\DocumentRepository;
 use App\Repository\UserRepository;
+use App\Service\S3Service;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -19,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class LoginController extends AbstractFOSRestController
 {
@@ -37,8 +41,14 @@ class LoginController extends AbstractFOSRestController
     public function getVkCallback(Request $request,
         JWTTokenManagerInterface $JWTManager,
         UserRepository $userRepository,
+        DocumentRepository $documentRepository,
+        S3Service $s3Service,
+        UserPasswordEncoderInterface $encoder,
         EventDispatcherInterface $eventDispatcher)
     {
+
+        $s3 = $s3Service->getS3Client();
+
         $code = $request->get('code');
         $client = HttpClient::create();
         $response = $client->request('GET', $this->getParameter('vk.api.access.token').$code);
@@ -52,39 +62,44 @@ class LoginController extends AbstractFOSRestController
         $res = $cl->request('GET', "https://api.vk.com/method/users.get?access_token=$accessToken&user_ids=$userId&fields=photo_max_orig,city,contacts&v=$vkApiVersion");
         $con = $res->toArray();
 
-        //[id] => 13637121
-        //[first_name] => Сергей
-        //[last_name] => Руднев
-        //[city] => Array
-        //(
-        //  [id] => 1
-        //  [title] => Москва
-        //)
-        //
-        //[photo_max_orig] => https://sun9-41.userapi.com/c852216/v852216494/152c82/faLhaKNAGHM.jpg?ava=1
-        //[home_phone] =>
-
         if(count($con['response'][0]) > 0){
             $fields = $con['response'][0];
             $user = $userRepository->findOneByEmailField($email);
             if(!$user) {
                 $user = new User();
-                $user->setPassword('qwertyuiop')
-                    ->setVkToken($accessToken)
-                    ->setVkId($userId)
-                    ->setEmail($email)
-                    ->setFirstName( $fields['first_name'])
-                    ->setLastName( $fields['last_name'])
-                    ->setVkPhone( $fields['home_phone'])
-                    ->setRoles(['ROLE_USER']);
-
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($user);
-                $em->flush();
             }
+            $encoded = $encoder->encodePassword($user, 'qwertyuiop');
+            $user->setPassword($encoded)
+                ->setVkToken($accessToken)
+                ->setVkId($userId)
+                ->setEmail($email)
+                ->setFirstName( $fields['first_name'])
+                ->setLastName( $fields['last_name'])
+                ->setVkPhone( $fields['home_phone'])
+                ->setRoles(['ROLE_USER']);
+
+            if(strlen($fields['photo_max_orig']) > 0) {
+                $photo_max_orig = basename(explode('?',$fields['photo_max_orig'])[0]);
+                $s3 = $s3->upload(
+                    'ege',
+                    $photo_max_orig,
+                    file_get_contents($fields['photo_max_orig']),
+                    'public-read'
+                );
+                if($s3) {
+                    $doc = new Document();
+                    $doc->setDocumentFileName($photo_max_orig);
+                    $doc->setUpdatedAt(new \DateTime);
+                    $user->setMyDocument($doc);
+                }
+            }
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($user);
+            $em->flush();
+
             $jwt = $JWTManager->create($user);
             $appLink = $this->getParameter('app_link').$jwt;
-            echo('<pre>');print_r($appLink);echo('</pre>');die;
             return $this->redirect($appLink, 301);
         }
     }
