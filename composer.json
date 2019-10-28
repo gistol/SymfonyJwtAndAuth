@@ -68,6 +68,11 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
+        "post-deploy-cmd": [
+            "composer install",
+            "bin/console doctrine:schema:update --force",
+            "bin/console cache:clear"
+        ],
         "post-install-cmd": [
             "@auto-scripts"
         ],
@@ -84,4 +89,5 @@
             "require": "4.3.*"
         }
     }
+
 }

@@ -47,13 +47,15 @@ class UserController extends AbstractFOSRestController
         $user = $this->getUser();
         $user = $userRepository->findOneByEmailField($user->getEmail());
 
-        $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
-            'Bucket' => $s3Service->getBucket(),
-            'Key' => $user->getMyDocument()->getDocumentFileName()
-        ]);
+        if($user) {
+            $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
+                'Bucket' => $s3Service->getBucket(),
+                'Key' => $user->getMyDocument()->getDocumentFileName()
+            ]);
 
-        $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
-        echo('<pre>');print_r((string)$request->getUri());echo('</pre>');
+            $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
+            echo('<pre>');print_r((string)$request->getUri());echo('</pre>');
+        }
 
         return $this->handleView($this->view([
             'FILE' => '123',

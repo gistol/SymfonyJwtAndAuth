@@ -50,7 +50,7 @@ class Document
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\File\File
+     * @return \Symfony\Component\HttpFoundation\File\File|null
      */
     public function getDocumentFile(): ?\Symfony\Component\HttpFoundation\File\File
     {
