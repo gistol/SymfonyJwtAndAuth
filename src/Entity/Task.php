@@ -53,6 +53,22 @@ class Task
      */
     protected $export = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="task")
+     */
+    private $question;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
+     */
+    private $answer;
+
+
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+        $this->answer = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -183,19 +199,6 @@ class Task
     {
         $this->export = $export;
         return $this;
-    }
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="task")
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
-     */
-    private $question;
-    private $answer;
-
-    public function __construct()
-    {
-        $this->question = new ArrayCollection();
-        $this->answer = new ArrayCollection();
     }
 
     /**
