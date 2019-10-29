@@ -4,6 +4,10 @@ namespace App\Controller;
 use App\Entity\Resources;
 use App\Entity\Task;
 use App\Entity\Post;
+use App\Entity\User;
+use App\Entity\UserTask;
+use App\Repository\UserRepository;
+use App\Repository\UserTaskRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\FOSRestController;
 use Monolog\Logger;
@@ -13,7 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
-
 
 /**
 * @Route("/api",name="api_")
@@ -26,27 +29,30 @@ class TaskController extends AbstractFOSRestController
      * @Route("/task/{id}", name="task_show")
      * @return Response
      */
-    public function getResourcesAction(Task $task)
+    public function getResourcesAction(Task $task,
+    UserTaskRepository $userTaskRepository)
     {
 
+        /** @var User $user */
+        $user = $this->getUser();
+
+        /** @var UserTask $userTasks */
+        $userTasks = $userTaskRepository->findOneBy(['userId' => $user->getId(), 'taskId'=>$task->getId()]);
+
         $questions = $task->getQuestion();
-        echo "<pre>"; print_r($questions);echo "</pre>";
+        $questionsArray = [];
+        foreach ($questions as $question) {
+            $questionsArray[] = [
+                "id" => $question->getId(),
+                "text" => $question->getText(),
+                "mode" => $question->getMode()
+            ];
+        }
 
         $result = [
             "id" => $task->getId(),
             "number" => $task->getNumber(),
-            "questions" => [
-                [
-                    "id" => "1Q1HHSACZN78X2BBTZ59ST9Y8C",
-                    "text" => "тест2",
-                    "mode" => "text"
-                ],
-                [
-                    "id" => "1Q1HHSACZN78X2BBTZ59ST9Y8C",
-                    "text" => "тест2",
-                    "mode" => "text"
-                ],
-            ],
+            "questions" => $questionsArray,
             "mode"=> $task->getMode(),
             "answers"=> [
                     [
@@ -70,8 +76,8 @@ class TaskController extends AbstractFOSRestController
                         ],
                     ],
                 ],
-            "status" => '',
-            "history" => []
+            "status" => $userTasks->getStatus(),
+//            "history" => $task->getHistory($user)
         ];
         return $this->handleView($this->view($result));
     }

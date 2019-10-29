@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
+use App\Repository\UserTaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,6 +59,8 @@ class Task
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="task")
      */
     private $question;
+
+    private $userTaskRepository;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
@@ -214,7 +218,37 @@ class Task
      */
     public function getAnswer()
     {
+
+
         return $this->answer;
     }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getStatus($user)
+    {
+//        $q = $this->createQueryBuilder('c')
+//            ->where('c.email = :email')
+//            ->andWhere('c.store_id = :store_id')
+//            ->setParameter('email', $email)
+//            ->setParameter('store_id', $store_id)
+//            ->getQuery();
+
+        return [];
+    }
+
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getHistory($user)
+    {
+        /** TODO  */
+        return [];
+    }
+
 
 }
