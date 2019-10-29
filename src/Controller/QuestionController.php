@@ -24,6 +24,9 @@ class QuestionController extends AbstractFOSRestController
      */
     public function getQuestionAction()
     {
-        $result = []
+        $result = [];
+
+        return $this->handleView($this->view($result));
+    }
 
 }
