@@ -21,7 +21,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 class CoursesController extends AbstractFOSRestController
 {
     /**
-     * @Route("/courses/", name="courses")
+     * @Route("/courses", name="courses")
      */
     public function getCoursesAction()
     {
@@ -55,7 +55,7 @@ class CoursesController extends AbstractFOSRestController
      */
     public function showCourses(Courses $courses)
     {
-
         return $this->handleView($this->view($courses));
     }
+
 }
