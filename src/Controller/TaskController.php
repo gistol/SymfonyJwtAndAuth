@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Resources;
 use App\Entity\Task;
 use App\Entity\Post;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -19,11 +20,14 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 */
 class TaskController extends AbstractFOSRestController
 {
-
+    /**
+     * @Route("/task", name="task")
+     */
+    #Пусто!
     /**
      * @Route("/task/{id}", name="task_show")
      */
-    public function showTask(Task $task)
+    public function getResourcesAction()
     {
         $result = [
             [
@@ -78,7 +82,11 @@ class TaskController extends AbstractFOSRestController
             "status" => "new",
             "history" => []
         ];
-
         return $this->handleView($this->view($result));
     }
+    public function showTask(Task $task)
+    {
+        return $this->handleView($this->view($task));
+    }
+
 }
