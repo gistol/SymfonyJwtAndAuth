@@ -67,6 +67,17 @@ class Task
      */
     private $answer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserTask", inversedBy="tasks")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $userTask;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -77,6 +88,22 @@ class Task
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserTask()
+    {
+        return $this->userTask;
+    }
+
+    /**
+     * @param mixed $userTask
+     */
+    public function setUserTask($userTask): void
+    {
+        $this->userTask = $userTask;
     }
 
     /**
@@ -248,6 +275,22 @@ class Task
     {
         /** TODO  */
         return [];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 
 

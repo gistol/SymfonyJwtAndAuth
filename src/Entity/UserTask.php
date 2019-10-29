@@ -4,6 +4,8 @@ namespace App\Entity;
 
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,6 +20,11 @@ class UserTask
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="userTask")
+     */
+    private $tasks;
 
     /**
      * @return mixed
@@ -99,6 +106,11 @@ class UserTask
         $this->updated_at = $updated_at;
     }
 
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
+
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -128,6 +140,24 @@ class UserTask
     {
         return $this->id;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTasks(): ArrayCollection
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param ArrayCollection $tasks
+     */
+    public function setTasks(ArrayCollection $tasks)
+    {
+        $this->tasks = $tasks;
+    }
+
+
 
 
 

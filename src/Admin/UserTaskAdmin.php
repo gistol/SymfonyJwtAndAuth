@@ -3,6 +3,7 @@
 
 namespace App\Admin;
 
+use App\Entity\Task;
 use App\Entity\UserTask;
 use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -21,8 +22,17 @@ class UserTaskAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('userId', TextType::class);
-        $formMapper->add('taskId', TextType::class);
+        $formMapper->add('userId', ModelType::class, [
+            'class' => Task::class,
+            'property' => 'id',
+            'multiple' => true,
+        ]);
+
+        $formMapper->add('taskId', ModelType::class, [
+            'class' => Task::class,
+            'property' => 'id',
+            'multiple' => true,
+        ]);
         $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
