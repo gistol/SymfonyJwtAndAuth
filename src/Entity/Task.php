@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
@@ -51,6 +53,22 @@ class Task
      */
     protected $export = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="task")
+     */
+    private $question;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
+     */
+    private $answer;
+
+
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+        $this->answer = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -182,4 +200,21 @@ class Task
         $this->export = $export;
         return $this;
     }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
 }

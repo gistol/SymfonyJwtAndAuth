@@ -98,6 +98,22 @@ class Question {
     private $answers;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="questions")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $task;
+
+    public function getTask(): Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(Task $task)
+    {
+        $this->task = $task;
+    }
+
+    /**
      * @param ArrayCollection $answers
      * @return Question
      */
