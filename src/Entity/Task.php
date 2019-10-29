@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
@@ -182,4 +184,34 @@ class Task
         $this->export = $export;
         return $this;
     }
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="task")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
+     */
+    private $question;
+    private $answer;
+
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+        $this->answer = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
 }
