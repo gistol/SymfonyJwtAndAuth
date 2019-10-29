@@ -27,7 +27,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, unique=true)
      */
     private $email;
 
@@ -70,7 +70,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $cityId;
+    private $name;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -222,18 +222,18 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getCityId()
+    public function getName()
     {
-        return $this->cityId;
+        return $this->name;
     }
 
     /**
-     * @param mixed $cityId
+     * @param mixed $name
      * @return \App\Entity\User
      */
-    public function setCityId($cityId)
+    public function setName($name)
     {
-        $this->cityId = $cityId;
+        $this->name = $name;
         return $this;
     }
 
