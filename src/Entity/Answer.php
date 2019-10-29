@@ -230,6 +230,22 @@ class Answer
         $answer = $question->getProducts();
     }
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $task;
+
+    public function getTask(): Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(Task $task)
+    {
+        $this->task = $task;
+    }
+
 
 
 

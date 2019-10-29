@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Courses;
 use App\Entity\News;
 use App\Service\GrayLog;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -23,7 +24,7 @@ class NewsController extends AbstractFOSRestController
     /**
      * @Route("/news", name="news")
      */
-    public function getNewsAction(LoggerInterface $logger)
+    public function getNewsAction()
     {
         $result = [
             [
@@ -131,26 +132,14 @@ class NewsController extends AbstractFOSRestController
 
 
 
-        $repository=$this->getDoctrine()->getRepository(News::class);
-        $news = $repository->findall();
-        $logger->critical('NewsController',[
-            'facility' => 'NewsController',
-            'data' => print_r($news, true)
-        ]);
-
-
-        return $this->handleView($this->view($news));
+        return $this->handleView($this->view($result));
     }
 
     /**
      * @Route("/news/{id}", name="news_show")
      */
-    public function showNews(News $news)
+    public function showNews(Courses $news)
     {
-        $logger = GrayLog::getInstance();
-        $logger->setFacility('NewsController');
-        $logger->setMessage('showNews');
-        $logger->send(['full_message' => 'showNews'], 'info');
         return $this->handleView($this->view($news));
     }
 
