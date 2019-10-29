@@ -93,12 +93,12 @@ class Question {
 
     /**
      * Как подключить: https://symfony.ru/doc/current/doctrine/associations.html
-     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
      */
     private $answers;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="question")
      * @ORM\JoinColumn(nullable=true)
      */
     private $task;
