@@ -28,6 +28,10 @@ class TaskController extends AbstractFOSRestController
      */
     public function getResourcesAction(Task $task)
     {
+
+        $questions = $task->getQuestion();
+        echo "<pre>"; print_r($questions);echo "</pre>";
+
         $result = [
             "id" => $task->getId(),
             "number" => $task->getNumber(),
