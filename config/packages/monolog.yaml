@@ -1,12 +1,6 @@
 monolog:
-  channels: [markdown]
-#
-#monolog:
-#  handlers:
-#    logstash:
-#      type: gelf
-#      channels: ["markdown"]
-#      publisher:
-#        hostname: syslog.synergy.ru
-#        port: 12201
-#      formatter: monolog.formatter.gelf_message
+  handlers:
+    gelf:
+      type: service
+      id: monolog.gelf_handler
+      channel: security

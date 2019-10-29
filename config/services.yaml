@@ -17,6 +17,10 @@ parameters:
 
     app_link: "egeapp://auth?jwt="
 
+    graylog.hostname: syslog2.synergy.ru
+    graylog.port: 12201
+    monolog.handler.gelf.debug_level: 100
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -31,9 +35,20 @@ services:
                 region: 'us-east-1'
                 version: 'latest'
 
+    gelf.validator:
+        class: Gelf\MessageValidator
 
-    Cocur\Slugify\Slugify:
-        autowire: true
+    gelf.transport:
+        class: Gelf\Transport\UdpTransport
+        arguments: ['%graylog.hostname%', '%graylog.port%']
+
+    gelf.publisher:
+        class: Gelf\Publisher
+        arguments: ['@gelf.transport', '@gelf.validator']
+
+    monolog.gelf_handler:
+        class: Monolog\Handler\GelfHandler
+        arguments: ['@gelf.publisher', '%monolog.handler.gelf.debug_level%']
 
     ct_file_store.s3:
         class: Aws\S3\S3Client
@@ -62,6 +77,7 @@ services:
     mailer:
         alias: fos_user.mailer.noop
         public: true
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
