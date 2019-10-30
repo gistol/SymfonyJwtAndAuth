@@ -139,17 +139,11 @@ class User implements UserInterface
      */
     private $myDocument;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
-     */
-    private $tasks;
-
     public function __construct()
     {
         $this->devices = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         //$this->image = new ArrayCollection();
-        $this->tasks = new ArrayCollection();
     }
 
 
@@ -567,21 +561,5 @@ class User implements UserInterface
         }
 
         return $code;
-    }
-
-    /**
-     * @return Collection|Task
-     */
-    public function getTasks(): ArrayCollection
-    {
-        return $this->tasks;
-    }
-
-    /**
-     * @param ArrayCollection $tasks
-     */
-    public function setTasks(ArrayCollection $tasks)
-    {
-        $this->tasks = $tasks;
     }
 }
