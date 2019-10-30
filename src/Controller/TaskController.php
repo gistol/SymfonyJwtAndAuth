@@ -6,6 +6,7 @@ use App\Entity\Task;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\UserTask;
+use App\Repository\AnswerRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserTaskRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -29,15 +30,24 @@ class TaskController extends AbstractFOSRestController
      * @Route("/task/{id}", name="task_show")
      * @return Response
      */
-    public function getResourcesAction(Task $task,
-    UserTaskRepository $userTaskRepository)
+    public function getResourcesAction(Task $task, UserTaskRepository $userTaskRepository)
     {
-
         /** @var User $user */
         $user = $this->getUser();
 
-        /** @var UserTask $userTasks */
-        $userTasks = $userTaskRepository->findOneBy(['userId' => $user->getId(), 'taskId'=>$task->getId()]);
+        $answersArray = [];
+        $answers = $task->getAnswer();
+        foreach ($answers as $answer) {
+            $question = [
+                "id" => $answer->getQuestion()->getId(),
+                "text" => $answer->getQuestion()->getText(),
+                "mode" => $answer->getQuestion()->getMode()
+            ];
+            $answersArray[] = [
+                "id" => $answer->getId(),
+                "question"=> [$question],
+            ];
+        }
 
         $questions = $task->getQuestion();
         $questionsArray = [];
@@ -49,34 +59,16 @@ class TaskController extends AbstractFOSRestController
             ];
         }
 
+        /** @var UserTask $userTask */
+        $userTask = $userTaskRepository->findOneBy(['userId' => $user->getId(), 'taskId'=>$task->getId()]);
+
         $result = [
             "id" => $task->getId(),
             "number" => $task->getNumber(),
             "questions" => $questionsArray,
             "mode"=> $task->getMode(),
-            "answers"=> [
-                    [
-                        "id" => "1Q1HHSAG2D9PS4H7W1CVTYSXTM",
-                        "question "=> [
-                            [
-                                "id" => "1Q1HHSAGTFY3NSN6XJXGZ3XCZW",
-                                "text" => "1",
-                                "mode" => "text"
-                            ],
-                        ],
-                    ],
-                    [
-                        "id" => "1Q1HHSAG2D9PS4H7W1CVTYSXTM",
-                        "question "=> [
-                            [
-                                "id" => "1Q1HHSAGTFY3NSN6XJXGZ3XCZW",
-                                "text" => "1",
-                                "mode" => "text"
-                            ],
-                        ],
-                    ],
-                ],
-            "status" => $userTasks->getStatus(),
+            "answers"=> $answersArray,
+            "status" => $userTask->getStatus(),
 //            "history" => $task->getHistory($user)
         ];
         return $this->handleView($this->view($result));

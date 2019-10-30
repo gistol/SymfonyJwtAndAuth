@@ -60,18 +60,22 @@ class Task
      */
     private $question;
 
-    private $userTaskRepository;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="task")
      */
     private $answer;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserTask", mappedBy="task")
+     */
+    private $userTask;
 
     public function __construct()
     {
         $this->question = new ArrayCollection();
         $this->answer = new ArrayCollection();
+        $this->userTask = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,36 +222,24 @@ class Task
      */
     public function getAnswer()
     {
-
-
         return $this->answer;
     }
 
-    /**
-     * @param User $user
-     * @return array
-     */
-    public function getStatus($user)
-    {
-//        $q = $this->createQueryBuilder('c')
-//            ->where('c.email = :email')
-//            ->andWhere('c.store_id = :store_id')
-//            ->setParameter('email', $email)
-//            ->setParameter('store_id', $store_id)
-//            ->getQuery();
 
-        return [];
+    /**
+     * @return mixed
+     */
+    public function getUserTask()
+    {
+        return $this->userTask;
     }
 
-
     /**
-     * @param User $user
-     * @return array
+     * @param mixed $userTask
      */
-    public function getHistory($user)
+    public function setUserTask($userTask): void
     {
-        /** TODO  */
-        return [];
+        $this->userTask = $userTask;
     }
 
 
