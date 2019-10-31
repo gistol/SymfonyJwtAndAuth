@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Courses;
 use App\Entity\News;
+use App\Repository\NewsRepository;
+use App\Repository\UserTaskRepository;
 use App\Service\GrayLog;
+use App\Service\S3Service;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\FOSRestController;
 use Monolog\Logger;
@@ -24,115 +27,54 @@ class NewsController extends AbstractFOSRestController
     /**
      * @Route("/news", name="news")
      */
-    public function getNewsAction()
+    public function getNewsAction(NewsRepository $newsRepository, S3Service $s3Service)
     {
-        $result = [
-            [
-                "id" => "id",
-                "title" => "title",
-                "subtitle" => "subtitle",
-                "body" => "body",
-                "link" => "link",
-                "link_text" => "",
-                "images" =>
-                    [
-                    "url" => "https://.storage.googleapis.com/images/files/1RE/GSH/C9Z/thumb/aaf290c18236a061bd2b1ee3c37y--kartiny-i-panno-a-s-pushkin-poster-a3.jpg?1551793109",
+        $newsRepa = $newsRepository->findAll();
+
+        $newsResult = [];
+
+
+
+        foreach ($newsRepa as $news) {
+
+            $doc = [
+                "id" => $news->getId(),
+                "title" => $news->getTitle(),
+                "subtitle" => $news->getSubtitle(),
+                "body" => $news->getTitle(),
+                "link" => $news->getLink(),
+                "link_text" => $news->getLinkText(),
+            ];
+
+
+
+            /*
+             * если есть картинка к новости то сходим в s3 за ней
+             */
+            if($news->getMyDocument()) {
+                $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
+                    'Bucket' => $s3Service->getBucket(),
+                    'Key' => $news->getMyDocument()->getDocumentFileName()
+                ]);
+
+                /* пока возмем 20 минут на загрузку картинки без авторизации */
+                $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
+
+
+                echo "<pre>"; print_r($news->getMyDocument()->getDocumentFile());echo "</pre>";
+                echo "<pre>"; print_r($request);echo "</pre>";
+
+                $doc['images'] = [
+                    "url" => $request->getUri(),
                     "width" => "200",
                     "height" => "200"
-                    ]
-                ],
+                ];
+            }
 
+            $newsResult[] = $doc;
+        }
 
-            [
-                [
-                    "id" => "id",
-                    "title" => "title",
-                    "subtitle" => "subtitle",
-                    "body" => "body",
-                    "link" => "link",
-                    "link_text" => "",
-                    "images" =>
-                        [
-                            "url" => "https://.storage.googleapis.com/images/files/1RE/GSH/C9Z/thumb/aaf290c18236a061bd2b1ee3c37y--kartiny-i-panno-a-s-pushkin-poster-a3.jpg?1551793109",
-                            "width" => "200",
-                            "height" => "200"
-                        ]
-                ]
-            ],
-
-        [
-            [
-                "id" => "id",
-                "title" => "title",
-                "subtitle" => "subtitle",
-                "body" => "body",
-                "link" => "link",
-                "link_text" => "",
-                "images" =>
-                    [
-                        "url" => "https://.storage.googleapis.com/images/files/1RE/GSH/C9Z/thumb/aaf290c18236a061bd2b1ee3c37y--kartiny-i-panno-a-s-pushkin-poster-a3.jpg?1551793109",
-                        "width" => "200",
-                        "height" => "200"
-                    ]
-            ]
-        ],
-
-        [
-            [
-                "id" => "id",
-                "title" => "title",
-                "subtitle" => "subtitle",
-                "body" => "body",
-                "link" => "link",
-                "link_text" => "",
-                "images" =>
-                    [
-                        "url" => "https://.storage.googleapis.com/images/files/1RE/GSH/C9Z/thumb/aaf290c18236a061bd2b1ee3c37y--kartiny-i-panno-a-s-pushkin-poster-a3.jpg?1551793109",
-                        "width" => "200",
-                        "height" => "200"
-                    ]
-            ]
-        ],
-
-        [
-            [
-                "id" => "id",
-                "title" => "title",
-                "subtitle" => "subtitle",
-                "body" => "body",
-                "link" => "link",
-                "link_text" => "",
-                "images" =>
-                    [
-                        "url" => "https://.storage.googleapis.com/images/files/1RE/GSH/C9Z/thumb/aaf290c18236a061bd2b1ee3c37y--kartiny-i-panno-a-s-pushkin-poster-a3.jpg?1551793109",
-                        "width" => "200",
-                        "height" => "200"
-                    ]
-            ]
-        ],
-
-        [
-            [
-                "id" => "id",
-                "title" => "title",
-                "subtitle" => "subtitle",
-                "body" => "body",
-                "link" => "link",
-                "link_text" => "",
-                "images" =>
-                    [
-                        "url" => "https://.storage.googleapis.com/images/files/1RE/GSH/C9Z/thumb/aaf290c18236a061bd2b1ee3c37y--kartiny-i-panno-a-s-pushkin-poster-a3.jpg?1551793109",
-                        "width" => "200",
-                        "height" => "200"
-                    ]
-            ]
-        ]
-
-        ];
-
-
-
-        return $this->handleView($this->view($result));
+        return $this->handleView($this->view($newsResult));
     }
 
     /**
