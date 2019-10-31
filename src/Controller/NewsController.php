@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Courses;
+use App\Entity\Levels;
 use App\Entity\News;
 use App\Repository\NewsRepository;
 use App\Repository\UserTaskRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Service\GrayLog;
 use App\Service\S3Service;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -24,15 +27,16 @@ use FOS\RestBundle\Controller\Annotations as Rest;
  */
 class NewsController extends AbstractFOSRestController
 {
+
     /**
      * @Route("/news", name="news")
+     * @return Response
      */
     public function getNewsAction(NewsRepository $newsRepository, S3Service $s3Service)
     {
         $newsRepa = $newsRepository->findAll();
 
         $newsResult = [];
-
 
 
         foreach ($newsRepa as $news) {
@@ -47,11 +51,10 @@ class NewsController extends AbstractFOSRestController
             ];
 
 
-
             /*
              * если есть картинка к новости то сходим в s3 за ней
              */
-            if($news->getMyDocument()) {
+            if ($news->getMyDocument()) {
                 $cmd = $s3Service->getS3Client()->getCommand('GetObject', [
                     'Bucket' => $s3Service->getBucket(),
                     'Key' => $news->getMyDocument()->getDocumentFileName()
@@ -61,8 +64,12 @@ class NewsController extends AbstractFOSRestController
                 $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
 
 
-                echo "<pre>"; print_r($news->getMyDocument()->getDocumentFile());echo "</pre>";
-                echo "<pre>"; print_r($request);echo "</pre>";
+                echo "<pre>";
+                print_r($news->getMyDocument()->getDocumentFile());
+                echo "</pre>";
+                echo "<pre>";
+                print_r($request);
+                echo "</pre>";
 
                 $doc['images'] = [
                     "url" => $request->getUri(),
@@ -73,8 +80,6 @@ class NewsController extends AbstractFOSRestController
 
             $newsResult[] = $doc;
         }
-
-        return $this->handleView($this->view($newsResult));
     }
 
     /**
