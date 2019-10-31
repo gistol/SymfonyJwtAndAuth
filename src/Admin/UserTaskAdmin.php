@@ -3,6 +3,8 @@
 
 namespace App\Admin;
 
+use App\Entity\Question;
+use App\Entity\Task;
 use App\Entity\UserTask;
 use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -21,17 +23,23 @@ class UserTaskAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('userId', TextType::class);
-        $formMapper->add('taskId', TextType::class);
         $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
+
+        $formMapper->add('user', ModelType::class, [
+            'class' => User::class,
+            'property' => 'id',
+        ]);
+
+        $formMapper->add('task', ModelType::class, [
+            'class' => Task::class,
+            'property' => 'id',
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('userId');
-        $datagridMapper->add('taskId');
         $datagridMapper->add('status');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
@@ -40,7 +48,6 @@ class UserTaskAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
 
-        $listMapper->addIdentifier('userId');
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
     }

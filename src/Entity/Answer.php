@@ -25,42 +25,44 @@ class Answer
      */
     protected $isCorrect = false;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $taskId;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $parentId;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $lft;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $rgt;
 
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
      * @ORM\JoinColumn(nullable=true)
      */
     private $question;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="answer")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $task;
 
     /**
      * @return mixed
@@ -103,23 +105,6 @@ class Answer
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTaskId()
-    {
-        return $this->taskId;
-    }
-
-    /**
-     * @param mixed $taskId
-     * @return Answer
-     */
-    public function setTaskId($taskId)
-    {
-        $this->taskId = $taskId;
-        return $this;
-    }
 
 
     /**
@@ -212,45 +197,23 @@ class Answer
         return $this;
     }
 
-    public function showAction($id)
-    {
-        $answer = $this->getDoctrine()
-            -> getRepository(Answer::class)
-            ->find($id);
-
-        $questionName = $answer->getQuestion()->getAnswers();
-    }
-
-    public function showAnswerAction($id)
-    {
-        $question = $this->getDoctrine()
-            ->getRepository(Question::class)
-            ->find($id);
-
-        $answer = $question->getProducts();
-    }
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="answers")
-     * @ORM\JoinColumn(nullable=true)
+     * @return Task
      */
-    private $task;
-
-    public function getTask(): Task
+    public function getTask(): ?Task
     {
         return $this->task;
     }
 
+    /**
+     * @param Task $task
+     * @return $this
+     */
     public function setTask(Task $task)
     {
         $this->task = $task;
+        return $this;
     }
-
-
-
-
-
-
-
 
 }

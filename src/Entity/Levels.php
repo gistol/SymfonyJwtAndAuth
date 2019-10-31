@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,22 +24,6 @@ class Levels
     private $number;
 
     /**
-     * @return mixed
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
-     * @param mixed $number
-     */
-    public function setNumber($number)
-    {
-        $this->number = $number;
-    }
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $title;
@@ -46,58 +32,6 @@ class Levels
      * @ORM\Column(type="string", nullable=true)
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $courseId;
-
-    /**
-     * @return mixed
-     */
-    public function getCourseId()
-    {
-        return $this->courseId;
-    }
-
-    /**
-     * @param mixed $courseId
-     */
-    public function setCourseId($courseId): void
-    {
-        $this->courseId = $courseId;
-    }
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $imageFileName;
-
-    /**
-     * @return mixed
-     */
-    public function getImageContentType()
-    {
-        return $this->imageContentType;
-    }
-
-    /**
-     * @param mixed $imageContentType
-     */
-    public function setImageContentType($imageContentType)
-    {
-        $this->imageContentType = $imageContentType;
-    }
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -119,12 +53,78 @@ class Levels
      */
     private $imageMeta;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Courses", mappedBy="level")
+     */
+    private $courses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="level")
+     */
+    private $tasks;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $imageFileName;
+
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+//        $this->courses = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param mixed $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageContentType()
+    {
+        return $this->imageContentType;
+    }
+
+    /**
+     * @param mixed $imageContentType
+     */
+    public function setImageContentType($imageContentType)
+    {
+        $this->imageContentType = $imageContentType;
+    }
+
+
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
-
 
     /**
      * @return string
@@ -161,8 +161,6 @@ class Levels
         $this->description = $description;
         return $this;
     }
-
-
 
     /**
      * @return mixed
@@ -265,6 +263,38 @@ class Levels
     public function setImageMeta($imageMeta)
     {
         $this->imageMeta = $imageMeta;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param mixed $tasks
+     */
+    public function setTasks($tasks): void
+    {
+        $this->tasks = $tasks;
+    }
+
+    /**
+     * @return Collection|Courses[]
+     */
+    public function getCourses()
+    {
+        return $this->courses;
+    }
+
+    /**
+     * @param mixed $courses
+     */
+    public function setCourses($courses): void
+    {
+        $this->courses = $courses;
     }
 
 }
