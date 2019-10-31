@@ -62,6 +62,5 @@ php -r "echo password_hash('ThePassword', PASSWORD_BCRYPT, ['cost' => 13]) . PHP
      
     AccessKey: "1PPVM5833KTFWKV9QGLH" 
     SecretKey: "BHt6A3nSqTiiWfnrmHGoCGG/AKt+GZNRanAGgNbq"
-
-
+    
 Disclaimer: This project has been generated on phpdocker.io

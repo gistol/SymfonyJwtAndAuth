@@ -74,7 +74,6 @@ class Courses
 
     /**
      * @ORM\ManyToOne(targetEntity="Levels", inversedBy="courses")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $level;
 

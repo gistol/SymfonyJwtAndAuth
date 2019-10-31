@@ -19,31 +19,31 @@ class News
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $body;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $subtitle;
 
@@ -55,14 +55,14 @@ class News
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $link;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $pushText;
 
@@ -74,9 +74,34 @@ class News
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $linkText;
+
+
+    /**
+     * @var $myDocument \App\Entity\Document
+     *
+     * @ORM\OneToOne( targetEntity="\App\Entity\Document", orphanRemoval=true, cascade={"persist", "remove"} )
+     * @ORM\JoinColumn(name="document_file_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $myDocument;
+
+    /**
+     * @return Document
+     */
+    public function getMyDocument(): ?Document
+    {
+        return $this->myDocument;
+    }
+
+    /**
+     * @param mixed $myDocument
+     */
+    public function setMyDocument($myDocument): void
+    {
+        $this->myDocument = $myDocument;
+    }
 
     /**
      * @return string

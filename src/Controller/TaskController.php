@@ -25,8 +25,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
-* @Route("/api",name="api_")
-*/
+ * @Route("/api",name="api_")
+ */
 class TaskController extends AbstractFOSRestController
 {
 
