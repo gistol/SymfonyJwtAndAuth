@@ -2,7 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Courses;
 use App\Entity\Levels;
+use App\Entity\Task;
+use App\Repository\CoursesRepository;
+use App\Repository\LevelsRepository;
+use App\Repository\TaskRepository;
+use App\Repository\UserLevelsRepository;
 use App\Service\GrayLog;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -20,46 +26,54 @@ use FOS\RestBundle\Controller\Annotations as Rest;
  */
 class LevelsController extends AbstractFOSRestController
 {
+
     /**
      * @Route("/levels", name="levels")
+     * @return Response
      */
-    public function getLevelsAction()
+    public function getLevelsAction(LevelsRepository $levelsRepository)
     {
-        $result = [
-            [
-                "id" => "1Q1HHSEARFGAM5Q94WTS2VHVSR",
-                "number" => 1,
-                "title" => "1",
-                "description" => null,
-                "status" => "new"
-            ],
+        $levels = $levelsRepository->findAll();
+        $levelsResult = [];
+        foreach ($levels as $level) {
+            $levelsResult[] = [
+                "id" => $level -> getId(),
+                "number" => $level -> getNumber(),
+                "title" => $level -> getTitle(),
+                "description" => $level -> getDescription(),
+                "status" => '',
+                "score" => ''
+            ];
+        }
 
-            [
-                "id" => "1RWWJEVD456VVJ3KV7EW99ERB8",
-                "number" => 1,
-                "title" => "Hello Jerry, come to rub my face in urine again?",
-                "description" => "Hideous dank stygian indescribable loathsome amorphous furtive. Unnamable amorphous gibbous indescribable. Singular stygian antediluvian charnel. Unmentionable antediluvian non-euclidean.",
-                "status" => "new"
-            ],
-
-            [
-                "id" => "1Q1HJ7SD13GFKAM0F9GV7C2Q6R",
-                 "number" => 1,
-                 "title" => "Вариант 1",
-                 "description" => "вариант ЕГЭ 2019",
-                 "status" => "new",
-                 "score" => 0
-            ]
-        ];
-
-        return $this->handleView($this->view($result));
+        return $this->handleView($this->view($levelsResult));
     }
     /**
-     * @Route("/levels/{id}", name="levels_show")
+     * @param Levels $levels
+     * @Route("/levels/{id}/tasks", name="levelsTasks_show")
+     * @return Response
      */
-    public function showLevels(Levels $levels)
+    public function showLevelsTasks(Levels $levels, TaskRepository $taskRepository, Task $task)
     {
-        return $this->handleView($this->view($levels));
+        $tasks = $taskRepository->findAll();
+        $tasksResult = [];
+        foreach ($tasks as $task) {
+            $tasksResult[] = [
+            [
+                "id" => $task -> getId(),
+        "title" => $task -> get,
+        "tasks" => [
+            [
+                "id" => "1Q1HHSEPPG9HGP0TV3RM6VYRMG",
+                "number" => 1,
+                "mode" => "matrix",
+                "status" => "new"
+            ],
+                   ],
+            ]
+
+        ];
+        return $this->handleView($this->view($tasksResult));
     }
 
 }

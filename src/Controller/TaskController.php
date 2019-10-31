@@ -53,11 +53,11 @@ class TaskController extends AbstractFOSRestController
             "id" => $task->getId(),
             "number" => $task->getNumber(),
             "questions" => $questionsArray,
-            "mode"=> $task->getMode(),
-            "answers"=> [
+            "mode" => $task->getMode(),
+            "answers" => [
                     [
                         "id" => "1Q1HHSAG2D9PS4H7W1CVTYSXTM",
-                        "question "=> [
+                        "question " => [
                             [
                                 "id" => "1Q1HHSAGTFY3NSN6XJXGZ3XCZW",
                                 "text" => "1",

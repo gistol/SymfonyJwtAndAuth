@@ -119,6 +119,11 @@ class Levels
      */
     private $imageMeta;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="levels")
+     */
+    private $userLevels;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -265,6 +270,22 @@ class Levels
     public function setImageMeta($imageMeta)
     {
         $this->imageMeta = $imageMeta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserLevels()
+    {
+        return $this->userLevels;
+    }
+
+    /**
+     * @param mixed $userLevels
+     */
+    public function setUserLevels($userLevels)
+    {
+        $this->userLevels = $userLevels;
     }
 
 }
