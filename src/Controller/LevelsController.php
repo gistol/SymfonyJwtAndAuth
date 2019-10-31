@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Courses;
 use App\Entity\Levels;
 use App\Entity\Task;
+use App\Entity\Topics;
 use App\Repository\CoursesRepository;
 use App\Repository\LevelsRepository;
 use App\Repository\TaskRepository;
+use App\Repository\TopicsRepository;
 use App\Repository\UserLevelsRepository;
 use App\Service\GrayLog;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -53,15 +55,15 @@ class LevelsController extends AbstractFOSRestController
      * @Route("/levels/{id}/tasks", name="levelsTasks_show")
      * @return Response
      */
-    public function showLevelsTasks(Levels $levels, TaskRepository $taskRepository, Task $task)
+    public function showLevelsTasks(Topics $topics, TopicsRepository $topicsRepository, Levels $levels, LevelsRepository $levelsRepository, TaskRepository $taskRepository, Task $task)
     {
-        $tasks = $taskRepository->findAll();
-        $tasksResult = [];
-        foreach ($tasks as $task) {
-            $tasksResult[] = [
+        $topics = $topicsRepository->findAll();
+        $topicsResult = [];
+        foreach ($topics as $topic) {
+            $topicsResult[] = [
             [
-                "id" => $task -> getId(),
-        "title" => $task -> get,
+                "id" => $topic -> getId(),
+        "title" => $topic -> getTitle(),
         "tasks" => [
             [
                 "id" => "1Q1HHSEPPG9HGP0TV3RM6VYRMG",
