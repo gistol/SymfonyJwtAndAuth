@@ -19,6 +19,11 @@ class Cities
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="cities")
+     */
+    private $users;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $externalId;
@@ -39,6 +44,11 @@ class Cities
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -119,15 +129,9 @@ class Cities
         return $this->id;
     }
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="cities")
-     */
-    private $users;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+
+
 
     /**
      * @return Collection|User[]
