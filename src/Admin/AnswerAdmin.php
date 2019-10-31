@@ -5,6 +5,7 @@ namespace App\Admin;
 
 use App\Entity\Answer;
 use App\Entity\Question;
+use App\Entity\Task;
 use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -24,14 +25,19 @@ class AnswerAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('isCorrect', CheckboxType::class);
-        $formMapper->add('taskId', TextType::class);
         $formMapper->add('parentId', TextType::class);
         $formMapper->add('lft', TextType::class);
         $formMapper->add('rgt', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
+
         $formMapper->add('question', ModelType::class, [
             'class' => Question::class,
+            'property' => 'id',
+        ]);
+
+        $formMapper->add('task', ModelType::class, [
+            'class' => Task::class,
             'property' => 'id',
         ]);
     }
@@ -39,7 +45,6 @@ class AnswerAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper->add('created_at');
-        $datagridMapper->add('updated_at');
     }
 
     protected function configureListFields(ListMapper $listMapper)

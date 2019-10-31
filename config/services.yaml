@@ -150,6 +150,16 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Document }
 
+    App\Admin\TopicsAdmin:
+        arguments: [~, App\Entity\Topics, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Topics }
+
+    App\Admin\LevelsAdmin:
+        arguments: [~, App\Entity\Levels, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Levels }
+
     App\Admin\UserTaskAdmin:
         arguments: [~, App\Entity\UserTask, ~]
         tags:
