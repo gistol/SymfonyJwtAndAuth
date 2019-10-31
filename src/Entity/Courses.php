@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,6 +71,12 @@ class Courses
      * @ORM\Column(type="datetime")
      */
     private $imageUpdatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Levels", inversedBy="courses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $level;
 
     /**
      * @return string
@@ -236,5 +243,23 @@ class Courses
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed $level
+     * @return Courses
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+        return $this;
     }
 }

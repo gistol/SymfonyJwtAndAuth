@@ -3,9 +3,11 @@
 
 namespace App\Admin;
 
+use App\Entity\Courses;
 use App\Entity\Levels;
 use App\Entity\Answer;
 use App\Entity\Question;
+use App\Entity\Topics;
 use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -27,7 +29,13 @@ class LevelsAdmin extends AbstractAdmin
         $formMapper->add('number', TextType::class);
         $formMapper->add('title', TextType::class);
         $formMapper->add('description', TextType::class);
-        $formMapper->add('courseId', TextType::class);
+
+        $formMapper->add('courses', ModelType::class, [
+            'class' => Courses::class,
+            'property' => 'title',
+            'required' => false
+        ]);
+
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
         $formMapper->add('imageFileName', TextType::class);
@@ -35,10 +43,7 @@ class LevelsAdmin extends AbstractAdmin
         $formMapper->add('imageFileSize', TextType::class);
         $formMapper->add('imageUpdatedAt', DateTimeType::class);
         $formMapper->add('imageMeta', TextType::class);
-//        $formMapper->add('imageContentType', TextType::class, [
-//            'class' => Question::class,
-//            'property' => 'id',
-//        ]);
+
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
