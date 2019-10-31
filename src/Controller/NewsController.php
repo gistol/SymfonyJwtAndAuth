@@ -35,10 +35,7 @@ class NewsController extends AbstractFOSRestController
     public function getNewsAction(NewsRepository $newsRepository, S3Service $s3Service)
     {
         $newsRepa = $newsRepository->findAll();
-
         $newsResult = [];
-
-
         foreach ($newsRepa as $news) {
 
             $doc = [
@@ -60,19 +57,15 @@ class NewsController extends AbstractFOSRestController
                     'Key' => $news->getMyDocument()->getDocumentFileName()
                 ]);
 
-                /* пока возмем 20 минут на загрузку картинки без авторизации */
-                $request = $s3Service->getS3Client()->createPresignedRequest($cmd, '+20 minutes');
+                $file = sprintf(
+                    $this->getParameter('aws_base_url').'/%s/document/%s',
+                    $this->getParameter('aws_bucket_name'),
+                    $news->getMyDocument()->getDocumentFileName()
+                );
 
-
-                echo "<pre>";
-                print_r($news->getMyDocument()->getDocumentFile());
-                echo "</pre>";
-                echo "<pre>";
-                print_r($request);
-                echo "</pre>";
 
                 $doc['images'] = [
-                    "url" => $request->getUri(),
+                    "url" => $file,
                     "width" => "200",
                     "height" => "200"
                 ];

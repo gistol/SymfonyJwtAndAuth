@@ -21,6 +21,9 @@ parameters:
     graylog.port: 12201
     monolog.handler.gelf.debug_level: 100
 
+    aws_base_url: '%env(AWS_BASE_URL)%'
+    aws_bucket_name: '%env(AWS_BUCKET_NAME)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
