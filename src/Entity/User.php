@@ -130,6 +130,11 @@ class User implements UserInterface
      */
     private $vkPhone;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserTask", mappedBy="user")
+     */
+    private $userTasks;
+
 
     /**
      * @var $myDocument \App\Entity\Document

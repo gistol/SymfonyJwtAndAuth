@@ -346,16 +346,17 @@ class Question {
     }
 
     public function __construct()
-        {
-            $this->answers = new ArrayCollection();
-        }
+    {
+        $this->answers = new ArrayCollection();
+    }
+
     /**
      * @return Collection|Answer[]
      */
-        public function getAnswers()
-        {
-            return $this->answers;
-        }
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
 
     public function addAnswer(Answer $answer)
     {

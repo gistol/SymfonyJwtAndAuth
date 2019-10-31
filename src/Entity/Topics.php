@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +22,11 @@ class Topics
      * @ORM\Column(type="string", nullable=true)
      */
     private $title;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="topic")
+     */
+    private $tasks;
 
     /**
      * @return mixed
@@ -103,6 +110,30 @@ class Topics
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param mixed $tasks
+     * @return Topics
+     */
+    public function setTasks($tasks)
+    {
+        $this->tasks = $tasks;
+        return $this;
+    }
+
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
     }
 }
 

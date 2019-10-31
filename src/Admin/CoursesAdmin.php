@@ -3,7 +3,9 @@
 
 namespace App\Admin;
 
+use App\Entity\Courses;
 use App\Entity\Device;
+use App\Entity\Levels;
 use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -23,6 +25,12 @@ class CoursesAdmin extends AbstractAdmin
     {
         $formMapper->add('title', TextType::class);
         $formMapper->add('description', TextareaType::class);
+
+        $formMapper->add('level', ModelType::class, [
+            'class' => Levels::class,
+            'property' => 'title',
+        ]);
+
         $formMapper->add('mode', TextType::class);
         $formMapper->add('imageFileName', TextType::class);
         $formMapper->add('imageContentType', TextType::class);

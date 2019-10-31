@@ -7,6 +7,7 @@ use App\Repository\UserTaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
@@ -26,11 +27,6 @@ class Task
     private $number;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $topicId;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $mode;
@@ -46,11 +42,6 @@ class Task
     private $updated_at;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $levelId;
-
-    /**
      * @ORM\Column(type="boolean", options={"default":"0"})
      */
     protected $export = false;
@@ -60,50 +51,63 @@ class Task
      */
     private $question;
 
-    private $userTaskRepository;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="task")
      */
     private $answer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UserTask", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\UserTask", mappedBy="task")
      */
     private $userTask;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="Answers", inversedBy="tasks")
      */
-    private $user;
+    private $answers;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Topics", inversedBy="tasks")
+     */
+    private $topic;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Levels", inversedBy="tasks")
+     */
+    private $level;
+
 
     public function __construct()
     {
         $this->question = new ArrayCollection();
         $this->answer = new ArrayCollection();
+        $this->userTask = new ArrayCollection();
+    }
+
+    /**
+     * @return null|Answers
+     */
+    public function getAnswers(): ?Answers
+    {
+        return $this->answers;
+    }
+
+    /**
+     * @param Answers $answers
+     * @return Task
+     */
+    public function setAnswers(Answers $answers)
+    {
+        $this->answers = $answers;
+        return $this;
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserTask()
-    {
-        return $this->userTask;
-    }
-
-    /**
-     * @param mixed $userTask
-     */
-    public function setUserTask($userTask): void
-    {
-        $this->userTask = $userTask;
     }
 
     /**
@@ -121,24 +125,6 @@ class Task
     public function setNumber($number)
     {
         $this->number = $number;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTopicId()
-    {
-        return $this->topicId;
-    }
-
-    /**
-     * @param mixed $topicId
-     * @return Task
-     */
-    public function setTopicId($topicId)
-    {
-        $this->topicId = $topicId;
         return $this;
     }
 
@@ -196,23 +182,6 @@ class Task
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLevelId()
-    {
-        return $this->levelId;
-    }
-
-    /**
-     * @param mixed $levelId
-     * @return Task
-     */
-    public function setLevelId($levelId)
-    {
-        $this->levelId = $levelId;
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -245,36 +214,58 @@ class Task
      */
     public function getAnswer()
     {
-
-
         return $this->answer;
     }
 
-    /**
-     * @param User $user
-     * @return array
-     */
-    public function getStatus($user)
-    {
-//        $q = $this->createQueryBuilder('c')
-//            ->where('c.email = :email')
-//            ->andWhere('c.store_id = :store_id')
-//            ->setParameter('email', $email)
-//            ->setParameter('store_id', $store_id)
-//            ->getQuery();
 
-        return [];
+    /**
+     * @return mixed
+     */
+    public function getUserTask()
+    {
+        return $this->userTask;
     }
 
+    /**
+     * @param mixed $userTask
+     */
+    public function setUserTask($userTask): void
+    {
+        $this->userTask = $userTask;
+    }
 
     /**
-     * @param User $user
-     * @return array
+     * @return mixed
      */
-    public function getHistory($user)
+    public function getTopic()
     {
-        /** TODO  */
-        return [];
+        return $this->topic;
+    }
+
+    /**
+     * @param mixed $topic
+     * @return Task
+     */
+    public function setTopic($topic)
+    {
+        $this->topic = $topic;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed $level
+     */
+    public function setLevel($level): void
+    {
+        $this->level = $level;
     }
 
     /**

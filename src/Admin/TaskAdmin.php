@@ -3,9 +3,11 @@
 
 namespace App\Admin;
 
+use App\Entity\Levels;
 use App\Entity\Task;
 use App\Entity\Answer;
 use App\Entity\Question;
+use App\Entity\Topics;
 use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -25,33 +27,38 @@ class TaskAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('number', TextType::class);
-        $formMapper->add('topicId', TextType::class);
+
         $formMapper->add('mode', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
-        $formMapper->add('level_id', TextType::class);
-        $formMapper->add('export', CheckboxType::class);
+        $formMapper->add('export', CheckboxType::class, ['required' => false]);
+
+        $formMapper->add('topic', ModelType::class, [
+            'class' => Topics::class,
+            'property' => 'title',
+        ]);
+
+        $formMapper->add('level', ModelType::class, [
+            'class' => Levels::class,
+            'property' => 'title',
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('number');
-        $datagridMapper->add('topicId');
         $datagridMapper->add('mode');
+        $datagridMapper->add('number');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
-        $datagridMapper->add('levelId');
         $datagridMapper->add('export');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('number');
-        $listMapper->add('topicId');
         $listMapper->add('mode');
+        $listMapper->add('number');
         $listMapper->add('created_at');
         $listMapper->add('updated_at');
-        $listMapper->add('level_id');
         $listMapper->add('export');
     }
 }
