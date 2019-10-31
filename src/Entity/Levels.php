@@ -121,16 +121,6 @@ class Levels
     /**
      * @return int|null
      */
-<<<<<<< HEAD
-    private $imageMeta;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="levels")
-     */
-    private $userLevels;
-
-=======
->>>>>>> bbee751ee8fdd3bdf7ac29d472e5deb7507639d9
     public function getId(): ?int
     {
         return $this->id;
@@ -276,21 +266,6 @@ class Levels
     }
 
     /**
-<<<<<<< HEAD
-     * @return mixed
-     */
-    public function getUserLevels()
-    {
-        return $this->userLevels;
-    }
-
-    /**
-     * @param mixed $userLevels
-     */
-    public function setUserLevels($userLevels)
-    {
-        $this->userLevels = $userLevels;
-=======
      * @return Collection|Task[]
      */
     public function getTasks()
@@ -320,7 +295,6 @@ class Levels
     public function setCourses($courses): void
     {
         $this->courses = $courses;
->>>>>>> bbee751ee8fdd3bdf7ac29d472e5deb7507639d9
     }
 
 }

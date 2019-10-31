@@ -25,8 +25,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
-* @Route("/api",name="api_")
-*/
+ * @Route("/api",name="api_")
+ */
 class TaskController extends AbstractFOSRestController
 {
 
@@ -72,36 +72,9 @@ class TaskController extends AbstractFOSRestController
             "id" => $task->getId(),
             "number" => $task->getNumber(),
             "questions" => $questionsArray,
-<<<<<<< HEAD
-            "mode" => $task->getMode(),
-            "answers" => [
-                    [
-                        "id" => "1Q1HHSAG2D9PS4H7W1CVTYSXTM",
-                        "question " => [
-                            [
-                                "id" => "1Q1HHSAGTFY3NSN6XJXGZ3XCZW",
-                                "text" => "1",
-                                "mode" => "text"
-                            ],
-                        ],
-                    ],
-                    [
-                        "id" => "1Q1HHSAG2D9PS4H7W1CVTYSXTM",
-                        "question "=> [
-                            [
-                                "id" => "1Q1HHSAGTFY3NSN6XJXGZ3XCZW",
-                                "text" => "1",
-                                "mode" => "text"
-                            ],
-                        ],
-                    ],
-                ],
-            "status" => $userTasks->getStatus(),
-=======
             "mode"=> $task->getMode(),
             "answers"=> $answersArray,
             "status" => $userTask->getStatus(),
->>>>>>> bbee751ee8fdd3bdf7ac29d472e5deb7507639d9
 //            "history" => $task->getHistory($user)
         ];
         return $this->handleView($this->view($result));
