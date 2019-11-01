@@ -64,6 +64,11 @@ class Levels
     private $tasks;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="level")
+     */
+    private $levels;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created_at;
@@ -79,11 +84,17 @@ class Levels
     private $imageFileName;
 
 
+
+
+
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->courses = new ArrayCollection();
     }
+
+
 
     /**
      * @return mixed
@@ -292,9 +303,25 @@ class Levels
     /**
      * @param mixed $courses
      */
-    public function setCourses($courses): void
+    public function setCourses($courses)
     {
         $this->courses = $courses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevels()
+    {
+        return $this->levels;
+    }
+
+    /**
+     * @param mixed $levels
+     */
+    public function setLevels($levels)
+    {
+        $this->levels = $levels;
     }
 
 }

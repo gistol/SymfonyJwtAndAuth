@@ -28,6 +28,7 @@ class CoursesAdmin extends AbstractAdmin
 
         $formMapper->add('level', ModelType::class, [
             'class' => Levels::class,
+            'multiple' => true,
             'property' => 'title',
         ]);
 

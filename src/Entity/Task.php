@@ -67,7 +67,6 @@ class Task
      */
     private $answers;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Topics", inversedBy="tasks")
      */
