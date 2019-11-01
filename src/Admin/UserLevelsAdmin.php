@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,13 +24,13 @@ class UserLevelsAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('user', TextType::class);
+        $formMapper->add('id', IntegerType::class);
+        $formMapper->add('user', ModelType::class);
         $formMapper->add('level',  ModelType::class, [
             'class' => Levels::class,
             'property' => 'levels',
             'multiple' => true,
         ]);
-
         $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
@@ -37,6 +38,7 @@ class UserLevelsAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
+        $datagridMapper->add('id');
         $datagridMapper->add('user');
         $datagridMapper->add('level');
         $datagridMapper->add('status');
@@ -46,9 +48,9 @@ class UserLevelsAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-
+        $listMapper->addIdentifier('id');
         $listMapper->addIdentifier('user');
-        $listMapper->add('level');
+        $listMapper->addIdentifier('level');
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
     }
