@@ -23,12 +23,12 @@ class UserLevelsAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('userId', TextType::class);
-//        $formMapper->add('level',  ModelType::class, [
-//            'class' => Levels::class,
-//            'property' => 'levels',
-//            'multiple' => true,
-//        ]);
+        $formMapper->add('user', TextType::class);
+        $formMapper->add('level',  ModelType::class, [
+            'class' => Levels::class,
+            'property' => 'levels',
+            'multiple' => true,
+        ]);
 
         $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
@@ -37,8 +37,8 @@ class UserLevelsAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('userId');
-//        $datagridMapper->add('level');
+        $datagridMapper->add('user');
+        $datagridMapper->add('level');
         $datagridMapper->add('status');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
@@ -47,8 +47,8 @@ class UserLevelsAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
 
-        $listMapper->addIdentifier('userId');
-//        $listMapper->add('level');
+        $listMapper->addIdentifier('user');
+        $listMapper->add('level');
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
     }

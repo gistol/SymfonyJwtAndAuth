@@ -32,7 +32,7 @@ class NotificationsAdmin extends AbstractAdmin
 
         $formMapper->add('user', ModelType::class, [
             'class' => User::class,
-            'property' => 'id',
+            'property' => 'email',
         ]);
     }
 

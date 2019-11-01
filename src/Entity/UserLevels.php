@@ -24,13 +24,13 @@ class UserLevels
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="levels")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $userId;
+    private $user;
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\Levels", inversedBy="levels")
-//     * @ORM\JoinColumn(nullable=true)
-//     */
-//    private $level;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Levels", inversedBy="levels")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $level;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -58,34 +58,34 @@ class UserLevels
     /**
      * @return mixed
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
-     * @param mixed $userId
+     * @param mixed $user
      */
-    public function setUserId($userId): void
+    public function setUser($user): void
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getLevel()
-//    {
-//        return $this->level;
-//    }
-//
-//    /**
-//     * @param mixed $level
-//     */
-//    public function setLevel($level): void
-//    {
-//        $this->level = $level;
-//    }
+    /**
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed $level
+     */
+    public function setLevel($level): void
+    {
+        $this->level = $level;
+    }
 
     /**
      * @return mixed
