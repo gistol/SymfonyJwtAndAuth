@@ -162,19 +162,21 @@ class User implements UserInterface
 
 
     /**
-     * @return mixed
+     * @return \App\Entity\Document
      */
-    public function getMyDocument()
+    public function getMyDocument(): ?Document
     {
         return $this->myDocument;
     }
 
     /**
      * @param mixed $myDocument
+     * @return User
      */
-    public function setMyDocument($myDocument): void
+    public function setMyDocument($myDocument)
     {
         $this->myDocument = $myDocument;
+        return $this;
     }
 
 
