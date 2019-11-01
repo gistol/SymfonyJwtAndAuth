@@ -37,25 +37,26 @@ class LevelsController extends AbstractFOSRestController
      * @return Response
      */
 
-//    public function getLevelsAction(LevelsRepository $levelsRepository, UserTask $userTask, UserTaskRepository $userTaskRepository)
 
-//    {
-//        $levels = $levelsRepository->findAll();
-//        $levelsResult = [];
-//        foreach ($levels as $level) {
-//            $level->
-//            $levelsResult[] = [
-//                "id" => $level->getId(),
-//                "number" => $level->getNumber(),
-//                "title" => $level->getTitle(),
-//                "description" => $level->getDescription(),
-//                "status" => $userTask->getStatus(),
-//                "score" => "CorrectAnswersNumber*5"
-//            ];
-//        }
-//
-//        return $this->handleView($this->view($levelsResult));
-//    }
+    public function getLevelsAction(LevelsRepository $levelsRepository, UserTask $userTask, UserTaskRepository $userTaskRepository)
+
+    {
+        $levels = $levelsRepository->findAll();
+        $levelsResult = [];
+        foreach ($levels as $level) {
+            $level->
+            $levelsResult[] = [
+                "id" => $level->getId(),
+                "number" => $level->getNumber(),
+                "title" => $level->getTitle(),
+                "description" => $level->getDescription(),
+                "status" => $userTask->getStatus(),
+                "score" => "CorrectAnswersNumber*5"
+            ];
+        }
+
+        return $this->handleView($this->view($levelsResult));
+    }
 
     /**
      * @param Levels $levels
