@@ -70,6 +70,10 @@ class UserLevels
     {
         $this->user = $user;
     }
+//
+//    public function __toString() {
+//        return $this->getLevel();
+//    }
 
     /**
      * @return mixed

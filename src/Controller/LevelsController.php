@@ -36,31 +36,41 @@ class LevelsController extends AbstractFOSRestController
      * @Route("/levels", name="levels")
      * @return Response
      */
-    public function getLevelsAction(UserLevels $userLevels, LevelsRepository $levelsRepository, UserLevelsRepository $userLevelsRepository)
-    {
-        $levels = $levelsRepository->findAll();
-        $levelsResult = [];
-        foreach ($levels as $level) {
-            $levelsResult[] = [
-                "id" => $level->getId(),
-                "number" => $level->getNumber(),
-                "title" => $level->getTitle(),
-                "description" => $level->getDescription(),
-                "status" => $userLevels -> getStatus(),
-                "score" => "CorrectAnswersNumber*5"
-            ];
-        }
 
-        return $this->handleView($this->view($levelsResult));
-    }
+//    public function getLevelsAction(LevelsRepository $levelsRepository, UserTask $userTask, UserTaskRepository $userTaskRepository)
+
+//    {
+//        $levels = $levelsRepository->findAll();
+//        $levelsResult = [];
+//        foreach ($levels as $level) {
+//            $level->
+//            $levelsResult[] = [
+//                "id" => $level->getId(),
+//                "number" => $level->getNumber(),
+//                "title" => $level->getTitle(),
+//                "description" => $level->getDescription(),
+//                "status" => $userTask->getStatus(),
+//                "score" => "CorrectAnswersNumber*5"
+//            ];
+//        }
+//
+//        return $this->handleView($this->view($levelsResult));
+//    }
 
     /**
      * @param Levels $levels
      * @Route("/levels/{id}/tasks", name="levelsTasks_show")
      * @return Response
      */
-    public function showLevelsTasks(Topics $topics, TopicsRepository $topicsRepository, Levels $levels, LevelsRepository $levelsRepository, TaskRepository $taskRepository, Task $task, UserTaskRepository $userTaskRepository, UserTask $userTask)
-    {
+    public function showLevelsTasks(Topics $topics,
+                                    TopicsRepository $topicsRepository,
+                                    Levels $levels,
+                                    LevelsRepository $levelsRepository,
+                                    TaskRepository $taskRepository,
+                                    Task $task,
+                                    UserTaskRepository $userTaskRepository,
+                                    UserTask $userTask
+    ){
         $topics = $topicsRepository->findAll();
         $topicsResult = [];
         foreach ($topics as $topic) {
@@ -70,10 +80,10 @@ class LevelsController extends AbstractFOSRestController
                     "title" => $topic->getTitle(),
                     "tasks" => [
                         [
-                            "id" => $task -> getId(),
-                            "number" => $task -> getNumber(),
-                            "mode" => $task -> getMode(),
-                            "status" => $userTask -> getStatus()
+                            "id" => $task->getId(),
+                            "number" => $task->getNumber(),
+                            "mode" => $task->getMode(),
+                            "status" => $userTask->getStatus()
                         ],
                     ],
                 ]

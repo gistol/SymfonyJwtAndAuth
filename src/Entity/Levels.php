@@ -91,8 +91,7 @@ class Levels
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-//        $this->courses = new ArrayCollection();
-        $this->levels = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
 
