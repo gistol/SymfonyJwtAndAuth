@@ -65,6 +65,7 @@ class Levels
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="level")
+     * * @ORM\Column(nullable=true)
      */
     private $levels;
 
@@ -93,6 +94,8 @@ class Levels
         $this->tasks = new ArrayCollection();
         $this->courses = new ArrayCollection();
     }
+
+
 
 
 
@@ -322,6 +325,10 @@ class Levels
     public function setLevels($levels)
     {
         $this->levels = $levels;
+    }
+
+    public function __toString() {
+        return $this->getLevels();
     }
 
 }

@@ -33,7 +33,8 @@ class LevelsAdmin extends AbstractAdmin
         $formMapper->add('courses', ModelType::class, [
             'class' => Courses::class,
             'property' => 'title',
-            'required' => false
+            'required' => false,
+            'multiple' => true
         ]);
 
         $formMapper->add('created_at', DateTimeType::class);
@@ -43,6 +44,8 @@ class LevelsAdmin extends AbstractAdmin
         $formMapper->add('imageFileSize', TextType::class);
         $formMapper->add('imageUpdatedAt', DateTimeType::class);
         $formMapper->add('imageMeta', TextType::class);
+        $formMapper->add('levels', TextType::class);
+
 
     }
 
@@ -52,6 +55,7 @@ class LevelsAdmin extends AbstractAdmin
         $datagridMapper->add('title');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
+        $datagridMapper->add('levels');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -60,6 +64,7 @@ class LevelsAdmin extends AbstractAdmin
         $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
+        $listMapper->addIdentifier('levels');
 
     }
 }
