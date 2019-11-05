@@ -25,13 +25,6 @@ class CoursesAdmin extends AbstractAdmin
     {
         $formMapper->add('title', TextType::class);
         $formMapper->add('description', TextareaType::class);
-
-        $formMapper->add('level', ModelType::class, [
-            'class' => Levels::class,
-            'multiple' => true,
-            'property' => 'title',
-        ]);
-
         $formMapper->add('mode', TextType::class);
         $formMapper->add('imageFileName', TextType::class);
         $formMapper->add('imageContentType', TextType::class);

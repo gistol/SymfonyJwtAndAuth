@@ -7,6 +7,7 @@ use App\Entity\Courses;
 use App\Entity\Levels;
 use App\Entity\Answer;
 use App\Entity\Question;
+use App\Entity\Task;
 use App\Entity\Topics;
 use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -32,9 +33,8 @@ class LevelsAdmin extends AbstractAdmin
 
         $formMapper->add('courses', ModelType::class, [
             'class' => Courses::class,
-            'property' => 'title',
+            'property' => 'id',
             'required' => false,
-            'multiple' => true
         ]);
 
         $formMapper->add('created_at', DateTimeType::class);
@@ -44,7 +44,10 @@ class LevelsAdmin extends AbstractAdmin
         $formMapper->add('imageFileSize', TextType::class);
         $formMapper->add('imageUpdatedAt', DateTimeType::class);
         $formMapper->add('imageMeta', TextType::class);
-        $formMapper->add('levels', TextType::class);
+//        $formMapper->add('levels', TextType::class);
+
+
+
 
 
     }
@@ -53,18 +56,22 @@ class LevelsAdmin extends AbstractAdmin
     {
         $datagridMapper->add('number');
         $datagridMapper->add('title');
+//        $datagridMapper->add('courses');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
         $datagridMapper->add('levels');
+
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('number');
         $listMapper->addIdentifier('title');
+//        $listMapper->addIdentifier('courses');
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
         $listMapper->addIdentifier('levels');
+
 
     }
 }

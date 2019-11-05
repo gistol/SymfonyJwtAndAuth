@@ -104,7 +104,10 @@ class Task
         return $this;
     }
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
