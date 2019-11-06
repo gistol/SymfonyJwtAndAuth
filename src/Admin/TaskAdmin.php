@@ -3,9 +3,9 @@
 
 namespace App\Admin;
 
+use App\Entity\Answers;
 use App\Entity\Levels;
 use App\Entity\Task;
-use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Topics;
 use Faker\Provider\Text;
@@ -35,6 +35,7 @@ class TaskAdmin extends AbstractAdmin
         $formMapper->add('topic', ModelType::class, [
             'class' => Topics::class,
             'property' => 'id',
+
         ]);
 
         $formMapper->add('level', ModelType::class, [
