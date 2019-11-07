@@ -78,14 +78,10 @@
         "post-deploy-cmd": [
             "composer install",
             "bin/console doctrine:schema:update --force",
-            "bin/console acl:init",
-            "bin/console fos:user:create --super-admin",
-            "bin/console sonata:admin:setup-acl",
             "bin/console cache:clear"
         ],
         "post-install-cmd": [
-            "@auto-scripts",
-            "@post-deploy-cmd"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
