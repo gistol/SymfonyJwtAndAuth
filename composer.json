@@ -95,16 +95,6 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.3.*"
-        },
-        "symfony-app-dir": "app",
-        "symfony-web-dir": "public",
-        "incenteev-parameters": {
-            "env-map": {
-                "database_name": "docker_symfony4",
-                "database_user": "dbuser",
-                "database_host": "localhost",
-                "database_password": "dbpw"
-            }
         }
     }
 
