@@ -46,14 +46,13 @@ class UsersAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper->add('email');
-        $datagridMapper->add('lastName', TextType::class);
-        $datagridMapper->add('created_at', DateTimeType::class);
-        $datagridMapper->add('updated_at', DateTimeType::class);
 
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('email');
+        $listMapper->add('created_at', DateTimeType::class);
+        $listMapper->add('updated_at', DateTimeType::class);
     }
 }
