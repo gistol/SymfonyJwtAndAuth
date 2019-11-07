@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class LoginController extends AbstractFOSRestController
 {
     /**
-     * @Route("/auth_vk", name="auth_vk")
+     * @Route("/users/auth_vk", name="auth_vk")
      */
     public function getLoginAction()
     {
