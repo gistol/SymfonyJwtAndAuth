@@ -81,8 +81,7 @@
             "bin/console cache:clear"
         ],
         "post-install-cmd": [
-            "@auto-scripts",
-            "@post-deploy-cmd"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
