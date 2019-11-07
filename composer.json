@@ -4,6 +4,9 @@
     "require": {
         "php": "^7.3.0",
         "ext-ctype": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "aws/aws-sdk-php": "^3.112",
         "cocur/slugify": "^3.2",
