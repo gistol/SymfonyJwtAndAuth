@@ -37,7 +37,7 @@ class UserController extends AbstractFOSRestController
     }
 
     /**
-     * @Route("/me", name="me")
+     * @Route("/users/me", name="me")
      */
     public function getUserAction(Security $security,
         DocumentRepository $documentRepository,
