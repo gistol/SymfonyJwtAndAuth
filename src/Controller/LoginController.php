@@ -72,6 +72,8 @@ class LoginController extends AbstractFOSRestController
             $user->setPassword($encoded)
                 ->setVkToken($accessToken)
                 ->setVkId($userId)
+                ->setCreatedAt(new \DateTime())
+                ->setUpdatedAt(new \DateTime())
                 ->setEmail($email)
                 ->setFirstName( $fields['first_name'])
                 ->setLastName( $fields['last_name'])
