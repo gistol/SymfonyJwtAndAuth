@@ -16,6 +16,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\DatePickerType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -26,6 +27,10 @@ class UsersAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('email', TextType::class);
+
+        $formMapper->add('lastName', TextType::class);
+        $formMapper->add('created_at', DateTimeType::class);
+        $formMapper->add('updated_at', DateTimeType::class);
 
         $formMapper
             ->add('myDocument', ModelType::class, [
@@ -41,6 +46,9 @@ class UsersAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper->add('email');
+        $datagridMapper->add('lastName', TextType::class);
+        $datagridMapper->add('created_at', DateTimeType::class);
+        $datagridMapper->add('updated_at', DateTimeType::class);
 
     }
 
