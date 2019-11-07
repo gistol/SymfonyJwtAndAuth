@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class LoginController extends AbstractFOSRestController
 {
     /**
-     * @Route("/auth_vk", name="auth_vk")
+     * @Route("/users/auth_vk", name="auth_vk")
      */
     public function getLoginAction()
     {
@@ -72,6 +72,8 @@ class LoginController extends AbstractFOSRestController
             $user->setPassword($encoded)
                 ->setVkToken($accessToken)
                 ->setVkId($userId)
+                ->setCreatedAt(new \DateTime())
+                ->setUpdatedAt(new \DateTime())
                 ->setEmail($email)
                 ->setFirstName( $fields['first_name'])
                 ->setLastName( $fields['last_name'])

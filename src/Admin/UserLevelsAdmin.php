@@ -3,6 +3,8 @@
 
 namespace App\Admin;
 
+use App\Entity\Answer;
+use App\Entity\Levels;
 use App\Entity\UserLevels;
 use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -13,16 +15,21 @@ use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 
 class UserLevelsAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('userId', TextType::class);
-        $formMapper->add('levelId', TextType::class);
+
+        $formMapper->add('user', ModelType::class);
+        $formMapper->add('level',  ModelType::class, [
+            'class' => Levels::class,
+            'property' => 'levels']);
         $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
@@ -30,8 +37,9 @@ class UserLevelsAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('userId');
-        $datagridMapper->add('levelId');
+
+        $datagridMapper->add('user');
+        $datagridMapper->add('level');
         $datagridMapper->add('status');
         $datagridMapper->add('created_at');
         $datagridMapper->add('updated_at');
@@ -40,7 +48,8 @@ class UserLevelsAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
 
-        $listMapper->addIdentifier('userId');
+        $listMapper->addIdentifier('user');
+        $listMapper->addIdentifier('level');
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
     }

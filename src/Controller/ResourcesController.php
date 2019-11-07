@@ -20,10 +20,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
  */
 class ResourcesController extends AbstractFOSRestController
 {
-    /**
-     * @Route("/resources", name="resources")
-     */
-    #Пусто!
+
     /**
      * @Route("/resources/{id}", name="resources_show")
      */

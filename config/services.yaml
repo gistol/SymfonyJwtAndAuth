@@ -21,6 +21,9 @@ parameters:
     graylog.port: 12201
     monolog.handler.gelf.debug_level: 100
 
+    aws_base_url: '%env(AWS_BASE_URL)%'
+    aws_bucket_name: '%env(AWS_BUCKET_NAME)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -125,10 +128,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: News }
 
-    App\Admin\AnswerAdmin:
-        arguments: [~, App\Entity\Answer, ~]
+    App\Admin\AnswersAdmin:
+        arguments: [~, App\Entity\Answers, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Answer }
+            - { name: sonata.admin, manager_type: orm, label: Answers }
 
     App\Admin\QuestionAdmin:
         arguments: [~, App\Entity\Question, ~]
@@ -164,6 +167,16 @@ services:
         arguments: [~, App\Entity\UserTask, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: UserTask }
+
+    App\Admin\UserLevelsAdmin:
+        arguments: [~, App\Entity\UserLevels, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserLevels }
+
+    App\Admin\UserAnswerAdmin:
+        arguments: [~, App\Entity\UserAnswer, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: UserAnswer }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     sensio_framework_extra.view.listener:

@@ -6,6 +6,7 @@ use App\Entity\Courses;
 use App\Entity\Levels;
 use App\Entity\Task;
 use App\Entity\Topics;
+use App\Entity\UserLevels;
 use App\Entity\UserTask;
 use App\Repository\CoursesRepository;
 use App\Repository\LevelsRepository;
@@ -35,7 +36,10 @@ class LevelsController extends AbstractFOSRestController
      * @Route("/levels", name="levels")
      * @return Response
      */
-    public function getLevelsAction(LevelsRepository $levelsRepository, UserTaskRepository $userTaskRepository)
+
+
+    public function getLevelsAction(LevelsRepository $levelsRepository, UserTask $userTask, UserTaskRepository $userTaskRepository)
+
     {
         $levels = $levelsRepository->findAll();
         $levelsResult = [];
@@ -46,7 +50,7 @@ class LevelsController extends AbstractFOSRestController
                 "number" => $level->getNumber(),
                 "title" => $level->getTitle(),
                 "description" => $level->getDescription(),
-//                "status" => $userTask->getStatus(),
+                "status" => $userTask->getStatus(),
                 "score" => "CorrectAnswersNumber*5"
             ];
         }

@@ -4,7 +4,6 @@
 namespace App\Admin;
 
 use App\Entity\Question;
-use App\Entity\Answer;
 use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -35,11 +34,6 @@ class QuestionAdmin extends AbstractAdmin
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
         $formMapper->add('image_meta', TextType::class);
-        $formMapper->add('answers', ModelType::class, [
-            'class' => Answer::class,
-            'property' => 'id',
-            'multiple' => true,
-        ]);
     }
 
         protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -54,7 +48,6 @@ class QuestionAdmin extends AbstractAdmin
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('updated_at');
         $listMapper->addIdentifier('sourceType');
-        $listMapper->addIdentifier('answer');
         $listMapper->addIdentifier('mode');
         $listMapper->addIdentifier('image_file_name');
         $listMapper->addIdentifier('image_content_type');

@@ -4,7 +4,6 @@
 namespace App\Admin;
 
 use App\Entity\ResourceCategories;
-use App\Entity\Answer;
 use App\Entity\Question;
 use Faker\Provider\Text;
 use Sonata\AdminBundle\Admin\AbstractAdmin;

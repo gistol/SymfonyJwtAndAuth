@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Levels
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -54,7 +55,7 @@ class Levels
     private $imageMeta;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Courses", mappedBy="level")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Courses", inversedBy="level")
      */
     private $courses;
 
@@ -62,6 +63,12 @@ class Levels
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="level")
      */
     private $tasks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="level")
+     * * @ORM\Column(nullable=true)
+     */
+    private $levels;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -78,11 +85,10 @@ class Levels
      */
     private $imageFileName;
 
-
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-        $this->courses = new ArrayCollection();
+
     }
 
     /**
@@ -116,7 +122,6 @@ class Levels
     {
         $this->imageContentType = $imageContentType;
     }
-
 
     /**
      * @return int|null
@@ -232,7 +237,6 @@ class Levels
         $this->imageFileSize = $imageFileSize;
     }
 
-
     /**
      * @return mixed
      */
@@ -282,7 +286,7 @@ class Levels
     }
 
     /**
-     * @return Collection|Courses[]
+     * @return mixed
      */
     public function getCourses()
     {
@@ -295,6 +299,26 @@ class Levels
     public function setCourses($courses): void
     {
         $this->courses = $courses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevels()
+    {
+        return $this->levels;
+    }
+
+    /**
+     * @param mixed $levels
+     */
+    public function setLevels($levels)
+    {
+        $this->levels = $levels;
+    }
+
+    public function __toString() {
+        return $this->getLevels();
     }
 
 }

@@ -10,6 +10,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\UserRepository;
+use App\Entity\UserLevels;
+use App\Repository\UserLevelsRepository;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -25,6 +28,12 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="user")
+     * @ORM\Column(nullable=true)
+     */
+    private $levels;
 
     /**
      * @ORM\Column(type="string", nullable=true, unique=true)
@@ -568,5 +577,21 @@ class User implements UserInterface
         }
 
         return $code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevels()
+    {
+        return $this->levels;
+    }
+
+    /**
+     * @param mixed $levels
+     */
+    public function setLevels($levels): void
+    {
+        $this->levels = $levels;
     }
 }

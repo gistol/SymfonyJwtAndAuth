@@ -53,19 +53,14 @@ class Task
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="task")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answers", mappedBy="tasks")
      */
-    private $answer;
+    private $answers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserTask", mappedBy="task")
      */
     private $userTask;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Answers", inversedBy="tasks")
-     */
-    private $answers;
 
 
     /**
@@ -83,29 +78,17 @@ class Task
     public function __construct()
     {
         $this->question = new ArrayCollection();
-        $this->answer = new ArrayCollection();
+        $this->answers = new ArrayCollection();
         $this->userTask = new ArrayCollection();
     }
 
-    /**
-     * @return null|Answers
-     */
-    public function getAnswers(): ?Answers
-    {
-        return $this->answers;
-    }
+
+
 
     /**
-     * @param Answers $answers
-     * @return Task
+     * @return mixed
      */
-    public function setAnswers(Answers $answers)
-    {
-        $this->answers = $answers;
-        return $this;
-    }
-
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -209,13 +192,8 @@ class Task
         return $this->question;
     }
 
-    /**
-     * @return Collection|Answer[]
-     */
-    public function getAnswer()
-    {
-        return $this->answer;
-    }
+
+
 
 
     /**
@@ -282,6 +260,22 @@ class Task
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAnswers(): ArrayCollection
+    {
+        return $this->answers;
+    }
+
+    /**
+     * @param ArrayCollection $answers
+     */
+    public function setAnswers(ArrayCollection $answers): void
+    {
+        $this->answers = $answers;
     }
 
 
