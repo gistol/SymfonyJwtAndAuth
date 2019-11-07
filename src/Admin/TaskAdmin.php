@@ -3,9 +3,9 @@
 
 namespace App\Admin;
 
+use App\Entity\Answers;
 use App\Entity\Levels;
 use App\Entity\Task;
-use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Topics;
 use Faker\Provider\Text;
@@ -27,7 +27,6 @@ class TaskAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('number', TextType::class);
-
         $formMapper->add('mode', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
@@ -35,12 +34,13 @@ class TaskAdmin extends AbstractAdmin
 
         $formMapper->add('topic', ModelType::class, [
             'class' => Topics::class,
-            'property' => 'title',
+            'property' => 'id',
+
         ]);
 
         $formMapper->add('level', ModelType::class, [
             'class' => Levels::class,
-            'property' => 'title',
+            'property' => 'id',
         ]);
     }
 

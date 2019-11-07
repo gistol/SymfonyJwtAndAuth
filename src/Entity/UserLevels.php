@@ -3,6 +3,7 @@
 namespace App\Entity;
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Entity\Levels;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -28,7 +29,7 @@ class UserLevels
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Levels", inversedBy="levels")
-     * @ORM\JoinColumn(nullable=true)
+     *
      */
     private $level;
 
@@ -54,26 +55,6 @@ class UserLevels
     {
         return $this->id;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void
-    {
-        $this->user = $user;
-    }
-//
-//    public function __toString() {
-//        return $this->getLevel();
-//    }
 
     /**
      * @return mixed
@@ -138,4 +119,24 @@ class UserLevels
     {
         $this->updated_at = $updated_at;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+//    public function __toString() {
+//        return $this->getLevel();
+//    }
 }

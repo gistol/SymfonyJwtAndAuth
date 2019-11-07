@@ -20,17 +20,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
+
 class UserLevelsAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('id', IntegerType::class);
+
         $formMapper->add('user', ModelType::class);
         $formMapper->add('level',  ModelType::class, [
             'class' => Levels::class,
-            'property' => 'levels',
-            'multiple' => true,
-        ]);
+            'property' => 'levels']);
         $formMapper->add('status', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
@@ -38,7 +37,7 @@ class UserLevelsAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('id');
+
         $datagridMapper->add('user');
         $datagridMapper->add('level');
         $datagridMapper->add('status');
@@ -48,7 +47,7 @@ class UserLevelsAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('id');
+
         $listMapper->addIdentifier('user');
         $listMapper->addIdentifier('level');
         $listMapper->addIdentifier('created_at');

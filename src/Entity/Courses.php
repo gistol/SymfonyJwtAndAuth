@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Courses
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,6 +31,11 @@ class Courses
      * @ORM\Column(type="text")
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Levels", mappedBy="courses")
+     */
+    private $level;
 
     /**
      * @ORM\Column(type="datetime")
@@ -73,14 +79,18 @@ class Courses
     private $imageUpdatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Levels", inversedBy="courses")
+     * Courses constructor.
+     * @param $level
      */
-    private $level;
+    public function __construct($level)
+    {
+        $this->level = $level;
+    }
 
     /**
      * @return string
      */
-    public function getTitle(): ?string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -239,7 +249,10 @@ class Courses
         return $this;
     }
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
@@ -254,11 +267,10 @@ class Courses
 
     /**
      * @param mixed $level
-     * @return Courses
      */
-    public function setLevel($level)
+    public function setLevel($level): void
     {
         $this->level = $level;
-        return $this;
     }
+
 }

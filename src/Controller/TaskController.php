@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Answer;
+
 use App\Entity\Answers;
 use App\Entity\Category;
 use App\Entity\Product;
@@ -10,7 +10,7 @@ use App\Entity\Task;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\UserTask;
-use App\Repository\AnswerRepository;
+use App\Repository\AnswersRepository;
 use App\Repository\UserRepository;
 use App\Repository\UserTaskRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -42,7 +42,7 @@ class TaskController extends AbstractFOSRestController
 
 
         $answersArray = [];
-        $answers = $task->getAnswer();
+        $answers = $task->getAnswers();
         foreach ($answers as $answer) {
             $question = [
                 "id" => $answer->getQuestion()->getId(),
@@ -81,54 +81,54 @@ class TaskController extends AbstractFOSRestController
     }
 
 
-    /**
-     * @Route("/task", name="tasks_show")
-     */
-    public function getTasksAction()
-    {
-
-        $home = new Answers();
-        $home->setTaskId('Home');
-
-        $bikes = new Answers();
-        $bikes->setName('Bikes');
-        $bikes->setParent($home);
-
-        $components = new Answers();
-        $components->setName('Components');
-        $components->setParent($home);
-
-        $wheelsAndTyres = new Answers();
-        $wheelsAndTyres->setName('Wheels & Tyres');
-        $wheelsAndTyres->setParent($home);
-
-        $entityManager = $this->getDoctrine()->getEntityManager();
-
-        $entityManager->persist($home);
-        $entityManager->persist($bikes);
-        $entityManager->persist($components);
-        $entityManager->persist($wheelsAndTyres);
-
-        $entityManager->flush();
-
-
-        $repository = $entityManager->getRepository(Answers::class);
-        $category = $repository->findOneBy(['name' => 'Enduro']);
-
-        $product = new Product();
-        $product->setName('Enduro Comp 29/6 Fattie Enduro Mountain Bike');
-        $product->setCategory($category);
-        $this->entityManager->persist($product);
-
-        $product = new Product();
-        $product->setName('Kona Process 167 Mountain Bike');
-        $product->setCategory($category);
-        $this->entityManager->persist($product);
+//    /**
+//     * @Route("/task", name="tasks_show")
+//     */
+//    public function getTasksAction()
+//    {
+//
+//        $home = new Answers();
+//        $home->setTaskId('Home');
+//
+//        $bikes = new Answers();
+//        $bikes->setName('Bikes');
+//        $bikes->setParent($home);
+//
+//        $components = new Answers();
+//        $components->setName('Components');
+//        $components->setParent($home);
+//
+//        $wheelsAndTyres = new Answers();
+//        $wheelsAndTyres->setName('Wheels & Tyres');
+//        $wheelsAndTyres->setParent($home);
+//
+//        $entityManager = $this->getDoctrine()->getEntityManager();
+//
+//        $entityManager->persist($home);
+//        $entityManager->persist($bikes);
+//        $entityManager->persist($components);
+//        $entityManager->persist($wheelsAndTyres);
+//
+//        $entityManager->flush();
+//
+//
+//        $repository = $entityManager->getRepository(Answers::class);
+//        $category = $repository->findOneBy(['name' => 'Enduro']);
+//
+//        $product = new Product();
+//        $product->setName('Enduro Comp 29/6 Fattie Enduro Mountain Bike');
+//        $product->setCategory($category);
+//        $this->entityManager->persist($product);
+//
+//        $product = new Product();
+//        $product->setName('Kona Process 167 Mountain Bike');
+//        $product->setCategory($category);
+//        $this->entityManager->persist($product);
 
 ///
 
-        return $this->handleView($this->view([]));
-    }
+//        return $this->handleView($this->view([]));
+//    }
 
 //    private function testTree()
 //    {

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-use App\Entity\Answer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -92,12 +91,6 @@ class Question {
     private $imageMeta;
 
     /**
-     * Как подключить: https://symfony.ru/doc/current/doctrine/associations.html
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
-     */
-    private $answers;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="question")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -111,16 +104,6 @@ class Question {
     public function setTask(Task $task)
     {
         $this->task = $task;
-    }
-
-    /**
-     * @param ArrayCollection $answers
-     * @return Question
-     */
-    public function setAnswers(ArrayCollection $answers)
-    {
-        $this->answers = $answers;
-        return $this;
     }
 
     public function getId(): ?int
@@ -304,7 +287,6 @@ class Question {
      */
     public function setCreatedAt($created_at)
     {
-
         $this->created_at = $created_at;
         return $this;
     }
@@ -344,36 +326,4 @@ class Question {
         $this->imageMeta = $imageMeta;
         return $this;
     }
-
-    public function __construct()
-    {
-        $this->answers = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection|Answer[]
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
-
-    public function addAnswer(Answer $answer)
-    {
-        if ($this->answers->contains($answer)) {
-            return;
-        }
-
-        $this->answers[] = $answer;
-        // установите *владеющую* сторону!
-        $answer->setQuestion($this);
-    }
-
-
-
-
-
-
-
-
 }

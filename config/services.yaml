@@ -128,10 +128,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: News }
 
-    App\Admin\AnswerAdmin:
-        arguments: [~, App\Entity\Answer, ~]
+    App\Admin\AnswersAdmin:
+        arguments: [~, App\Entity\Answers, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Answer }
+            - { name: sonata.admin, manager_type: orm, label: Answers }
 
     App\Admin\QuestionAdmin:
         arguments: [~, App\Entity\Question, ~]

@@ -3,7 +3,6 @@
 
 namespace App\Admin;
 
-use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Task;
 use Faker\Provider\Text;
@@ -20,23 +19,18 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
-class AnswerAdmin extends AbstractAdmin
+class AnswersAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('isCorrect', CheckboxType::class);
-        $formMapper->add('parentId', TextType::class);
+        $formMapper->add('parent', TextType::class);
         $formMapper->add('lft', TextType::class);
         $formMapper->add('rgt', TextType::class);
         $formMapper->add('created_at', DateTimeType::class);
         $formMapper->add('updated_at', DateTimeType::class);
 
-        $formMapper->add('question', ModelType::class, [
-            'class' => Question::class,
-            'property' => 'id',
-        ]);
-
-        $formMapper->add('task', ModelType::class, [
+        $formMapper->add('tasks', ModelType::class, [
             'class' => Task::class,
             'property' => 'id',
         ]);
@@ -51,7 +45,6 @@ class AnswerAdmin extends AbstractAdmin
     {
         $listMapper->addIdentifier('created_at');
         $listMapper->addIdentifier('user_id');
-        $listMapper->addIdentifier('answer_id');
         $listMapper->addIdentifier('updated_at');
         $listMapper->addIdentifier('lft');
     }

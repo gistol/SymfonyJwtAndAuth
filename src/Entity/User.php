@@ -30,7 +30,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="level")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserLevels", mappedBy="user")
      * @ORM\Column(nullable=true)
      */
     private $levels;

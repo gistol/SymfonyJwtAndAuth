@@ -82,7 +82,7 @@ class Answers
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="answers")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="answers")
      */
     private $tasks;
 
@@ -101,11 +101,6 @@ class Answers
      */
     private $updated_at;
 
-    public function __construct()
-    {
-        $this->tasks = new ArrayCollection();
-    }
-
     /**
      * @return int|null
      */
@@ -120,14 +115,6 @@ class Answers
     public function getRgt(): ?int
     {
         return $this->rgt;
-    }
-
-    /**
-     * @return null|Task[]|ArrayCollection|Collection
-     */
-    public function getProducts(): ?Collection
-    {
-        return $this->tasks;
     }
 
     /**
@@ -257,4 +244,21 @@ class Answers
     {
         $this->taskId = $taskId;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param mixed $tasks
+     */
+    public function setTasks($tasks): void
+    {
+        $this->tasks = $tasks;
+    }
+
 }
