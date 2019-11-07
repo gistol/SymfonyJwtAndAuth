@@ -4,6 +4,9 @@
     "require": {
         "php": "^7.3.0",
         "ext-ctype": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "aws/aws-sdk-php": "^3.112",
         "cocur/slugify": "^3.2",
@@ -75,14 +78,10 @@
         "post-deploy-cmd": [
             "composer install",
             "bin/console doctrine:schema:update --force",
-            "bin/console acl:init",
-            "bin/console fos:user:create --super-admin",
-            "bin/console sonata:admin:setup-acl",
             "bin/console cache:clear"
         ],
         "post-install-cmd": [
-            "@auto-scripts",
-            "@post-deploy-cmd"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
@@ -95,16 +94,6 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.3.*"
-        },
-        "symfony-app-dir": "app",
-        "symfony-web-dir": "public",
-        "incenteev-parameters": {
-            "env-map": {
-                "database_name": "docker_symfony4",
-                "database_user": "dbuser",
-                "database_host": "localhost",
-                "database_password": "dbpw"
-            }
         }
     }
 
